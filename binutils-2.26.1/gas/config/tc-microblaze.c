@@ -87,6 +87,7 @@ const char FLT_CHARS[] = "rRsSfFdDxXpP";
 #define TLSDTPREL_OFFSET     14
 #define TLSGOTTPREL_OFFSET   15
 #define TLSTPREL_OFFSET      16
+#define TEXT_OFFSET      	 17
 
 /* Initialize the relax table.  */
 const relax_typeS md_relax_table[] =
@@ -107,7 +108,8 @@ const relax_typeS md_relax_table[] =
   { 0x7fffffff, 0x80000000, INST_WORD_SIZE*1, 0 },  /* 13: TLSDTPMOD_OFFSET.  */
   { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 14: TLSDTPREL_OFFSET.  */
   { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 15: TLSGOTTPREL_OFFSET.  */
-  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 }   /* 16: TLSTPREL_OFFSET.  */
+  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },   /* 16: TLSTPREL_OFFSET.  */
+  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 }   /* 17: TEXT_OFFSET.  */
 };
 
 static struct hash_control * opcode_hash_control;	/* Opcode mnemonics.  */
@@ -618,7 +620,8 @@ parse_exp (char *s, expressionS *e)
 #define IMM_TLSDTPMOD 6
 #define IMM_TLSDTPREL 7
 #define IMM_TLSTPREL  8
-#define IMM_MAX    9
+#define IMM_TXTREL    9
+#define IMM_MAX    10
 
 struct imm_type {
 	char *isuffix;	 /* Suffix String */
@@ -637,7 +640,8 @@ static struct imm_type imm_types[] = {
 	{ "TLSLDM", IMM_TLSLD, TLSLD_OFFSET },
 	{ "TLSDTPMOD", IMM_TLSDTPMOD, TLSDTPMOD_OFFSET },
 	{ "TLSDTPREL", IMM_TLSDTPREL, TLSDTPREL_OFFSET },
-	{ "TLSTPREL", IMM_TLSTPREL, TLSTPREL_OFFSET }
+	{ "TLSTPREL", IMM_TLSTPREL, TLSTPREL_OFFSET },
+	{ "TXTREL", IMM_TXTREL, TEXT_OFFSET }
 };
 
 static int
@@ -680,8 +684,10 @@ get_imm_otype (int itype)
 }
 
 static symbolS * GOT_symbol;
+static symbolS * TEXT_symbol;
 
 #define GOT_SYMBOL_NAME "_GLOBAL_OFFSET_TABLE_"
+#define TEXT_SYMBOL_NAME "_TEXT_START_ADDR"
 
 static char *
 parse_imm (char * s, expressionS * e, offsetT min, offsetT max)
@@ -730,6 +736,11 @@ parse_imm (char * s, expressionS * e, offsetT min, offsetT max)
     {
       GOT_symbol = symbol_find_or_make (GOT_SYMBOL_NAME);
     }
+
+  if (!TEXT_symbol && ! strncmp (s, TEXT_SYMBOL_NAME, 15))
+  {
+	  TEXT_symbol = symbol_find_or_make (TEXT_SYMBOL_NAME);
+  }
 
   if (e->X_op == O_absent)
     ; /* An error message has already been emitted.  */
@@ -1878,6 +1889,9 @@ md_convert_frag (bfd * abfd ATTRIBUTE_UNUSED,
       if (fragP->fr_symbol == GOT_symbol)
         fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
 	         fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_GOTPC);
+      else if (fragP->fr_symbol == TEXT_symbol)
+        fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
+      	     fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_TEXTPCREL);
       else
         fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
 	         fragP->fr_offset, FALSE, BFD_RELOC_64);
@@ -1911,6 +1925,12 @@ md_convert_frag (bfd * abfd ATTRIBUTE_UNUSED,
     case GOT_OFFSET:
       fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
 	       fragP->fr_offset, FALSE, BFD_RELOC_MICROBLAZE_64_GOT);
+      fragP->fr_fix += INST_WORD_SIZE * 2;
+      fragP->fr_var = 0;
+      break;
+    case TEXT_OFFSET:
+      fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
+    	   fragP->fr_offset, FALSE, BFD_RELOC_MICROBLAZE_64_TEXTREL);
       fragP->fr_fix += INST_WORD_SIZE * 2;
       fragP->fr_var = 0;
       break;
@@ -2090,6 +2110,7 @@ md_apply_fix (fixS *   fixP,
       break;
     case BFD_RELOC_64_PCREL:
     case BFD_RELOC_64:
+    case BFD_RELOC_MICROBLAZE_64_TEXTREL:
       /* Add an imm instruction.  First save the current instruction.  */
       for (i = 0; i < INST_WORD_SIZE; i++)
 	buf[i + INST_WORD_SIZE] = buf[i];
@@ -2136,6 +2157,7 @@ md_apply_fix (fixS *   fixP,
     case BFD_RELOC_MICROBLAZE_64_GOT:
     case BFD_RELOC_MICROBLAZE_64_PLT:
     case BFD_RELOC_MICROBLAZE_64_GOTOFF:
+    case BFD_RELOC_MICROBLAZE_64_TEXTPCREL:
       /* Add an imm instruction.  First save the current instruction.  */
       for (i = 0; i < INST_WORD_SIZE; i++)
 	buf[i + INST_WORD_SIZE] = buf[i];
@@ -2232,13 +2254,14 @@ md_estimate_size_before_relax (fragS * fragP,
       break;
 
     case INST_NO_OFFSET:
+    case TEXT_OFFSET:
       /* Used to be a reference to somewhere which was unknown.  */
       if (fragP->fr_symbol)
         {
 	  if (fragP->fr_opcode == NULL)
 	    {
               /* Used as an absolute value.  */
-              fragP->fr_subtype = DEFINED_ABS_SEGMENT;
+              if(fragP->fr_subtype == INST_NO_OFFSET) fragP->fr_subtype = DEFINED_ABS_SEGMENT;
               /* Variable part does not change.  */
               fragP->fr_var = INST_WORD_SIZE*2;
             }
@@ -2410,6 +2433,8 @@ tc_gen_reloc (asection * section ATTRIBUTE_UNUSED, fixS * fixp)
     case BFD_RELOC_MICROBLAZE_64_TLSDTPREL:
     case BFD_RELOC_MICROBLAZE_64_TLSGOTTPREL:
     case BFD_RELOC_MICROBLAZE_64_TLSTPREL:
+    case BFD_RELOC_MICROBLAZE_64_TEXTPCREL:
+    case BFD_RELOC_MICROBLAZE_64_TEXTREL:
       code = fixp->fx_r_type;
       break;
 

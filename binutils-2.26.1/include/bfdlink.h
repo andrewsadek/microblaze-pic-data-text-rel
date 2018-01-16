@@ -400,6 +400,12 @@ struct bfd_link_info
   /* TRUE if ok to have multiple definition.  */
   unsigned int allow_multiple_definition: 1;
 
+  /* TRUE if ok to have prohibt multiple definition of absolute symbols.  */
+  unsigned int prohibt_multiple_definition_absolute: 1;
+
+  /* TRUE if ok to adapt instructions for abs references  */
+  unsigned int adjust_insn_abs_refs: 1;
+
   /* TRUE if ok to have version with no definition.  */
   unsigned int allow_undefined_version: 1;
 

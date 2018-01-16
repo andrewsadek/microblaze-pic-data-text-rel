@@ -150,6 +150,7 @@ extern reg_class_t default_secondary_reload (bool, rtx, reg_class_t,
 extern void default_target_option_override (void);
 extern void hook_void_bitmap (bitmap);
 extern int default_reloc_rw_mask (void);
+extern bool default_generate_pic_addr_diff_vec (void);
 extern tree default_mangle_decl_assembler_name (tree, tree);
 extern tree default_emutls_var_fields (tree, tree *);
 extern tree default_emutls_var_init (tree, tree, tree);

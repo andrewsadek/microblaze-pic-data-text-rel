@@ -269,6 +269,8 @@ main (int argc, char **argv)
   link_info.keep_memory = TRUE;
   link_info.combreloc = TRUE;
   link_info.strip_discarded = TRUE;
+  link_info.prohibt_multiple_definition_absolute = FALSE;
+  link_info.adjust_insn_abs_refs = FALSE;
   link_info.emit_hash = TRUE;
   link_info.callbacks = &link_callbacks;
   link_info.input_bfds_tail = &link_info.input_bfds;
@@ -939,12 +941,13 @@ multiple_definition (struct bfd_link_info *info,
      discarded, and this is not really a multiple definition at all.
      FIXME: It would be cleaner to somehow ignore symbols defined in
      sections which are being discarded.  */
-  if ((osec->output_section != NULL
+  if (!info->prohibt_multiple_definition_absolute
+	&& ((osec->output_section != NULL
        && ! bfd_is_abs_section (osec)
        && bfd_is_abs_section (osec->output_section))
       || (nsec->output_section != NULL
 	  && ! bfd_is_abs_section (nsec)
-	  && bfd_is_abs_section (nsec->output_section)))
+	  && bfd_is_abs_section (nsec->output_section))))
     return TRUE;
 
   name = h->root.string;

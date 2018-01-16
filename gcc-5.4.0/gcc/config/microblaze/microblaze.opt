@@ -123,5 +123,9 @@ mxl-mode-novectors
 Target Mask(XL_MODE_NOVECTORS)
 Description for mxl-mode-novectors
 
+mpic-data-text-rel
+Target Mask(PIC_DATA_TEXT_REL)
+This allows referencing data by offset from the start of text instead of GOT. It shall be invoked with -fPIC/-fPIE.
+
 mxl-mode-xilkernel
 Target
