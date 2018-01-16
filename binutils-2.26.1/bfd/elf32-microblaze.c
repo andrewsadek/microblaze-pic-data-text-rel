@@ -935,7 +935,7 @@ microblaze_bfd_write_branch_absolute_value_64 (bfd *abfd, bfd_byte *bfd_addr)
 
 /*
  * This code is to revert base register of instruction back to R0 instead of R20
- * in case of absolute address coming from external elf + -mxl-data-text-rel option was defined
+ * in case of absolute address coming from external elf and -mpic-data-text-rel option was invoked in compilation
  */
 
 static void
