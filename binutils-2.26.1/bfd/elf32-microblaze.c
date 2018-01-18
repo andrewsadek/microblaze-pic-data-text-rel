@@ -1116,7 +1116,7 @@ microblaze_elf_relocate_section (bfd *output_bfd,
 		 a merge section.  */
 	      addend = rel->r_addend;
 	    }
-	  else
+	  else if((int)r_type != R_MICROBLAZE_TEXTPCREL_64) // no need to resolve _TEXT_START_ADDRESS
 	    {
 	      /* External symbol.  */
 	      bfd_boolean warned ATTRIBUTE_UNUSED;

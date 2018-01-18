@@ -3267,7 +3267,7 @@ expand_pic_symbol_ref (machine_mode mode ATTRIBUTE_UNUSED, rtx op)
   result = (!TARGET_PIC_DATA_TEXT_REL)? gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_GOTOFF): gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_TEXT);
   result = gen_rtx_CONST (Pmode, result);
   result = gen_rtx_PLUS (Pmode, pic_offset_table_rtx, result);
-  if(!TARGET_PIC_DATA_TEXT_REL) result = gen_const_mem (Pmode, result);
+  result = (!TARGET_PIC_DATA_TEXT_REL)? gen_const_mem (Pmode, result) : result;
 
   return result;
 }
