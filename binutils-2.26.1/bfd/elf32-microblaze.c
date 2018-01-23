@@ -1915,8 +1915,7 @@ microblaze_elf_relax_section (bfd *abfd,
 	    continue;
 
           if(link_info->adjust_insn_abs_refs && h->root.u.def.section->sec_info_type == SEC_INFO_TYPE_JUST_SYMS)
-        	/** symbol from external file (ABS) is 32-bit,
-        	 * thus no chance for immediate insn to be removed
+        	/** Just ignore symbol from external file
         	 */
         continue;
 
