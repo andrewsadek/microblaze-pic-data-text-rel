@@ -65,7 +65,7 @@ As shown in code above, r20 shall hold the start address of current text section
 
 All branches are relative as usual.
 
-The diagram below describe the time perfromance analogy between -fPIE (PIC) and -mpic-data-text-rel (Enh-PIC), when running dhrystone on a Xilinx FPGA Spartan 6.
+The diagram below describe the time perfromance analogy between -fPIE (PIC) and -mpic-data-text-rel (Enh-PIC), when running dhrystone on a Xilinx FPGA Spartan 6 (100 MHz).
 
 ![alt text](https://github.com/andrewsadek/microblaze-pic-data-text-rel/blob/pic_data_text_rel/dhrystone_time_results.png)
 
