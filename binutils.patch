@@ -1,0 +1,575 @@
+diff --git a/bfd/bfd-in2.h b/bfd/bfd-in2.h
+index 9742c1a..2102d68 100644
+--- a/bfd/bfd-in2.h
++++ b/bfd/bfd-in2.h
+@@ -5904,6 +5904,16 @@ to two words (uses imm instruction).  */
+ to two words (uses imm instruction).  */
+   BFD_RELOC_MICROBLAZE_64_TLSTPREL,
+ 
++/* This is a 64 bit reloc that stores the 32 bit pc relative
++value in two words (with an imm instruction).  The relocation is
++PC-relative offset from start of TEXT */
++  BFD_RELOC_MICROBLAZE_64_TEXTPCREL,
++
++/* This is a 64 bit reloc that stores the 32 bit offset
++value in two words (with an imm instruction).  The relocation is
++relative offset from start of TEXT */
++  BFD_RELOC_MICROBLAZE_64_TEXTREL,
++
+ /* AArch64 pseudo relocation code to mark the start of the AArch64
+ relocation enumerators.  N.B. the order of the enumerators is
+ important as several tables in the AArch64 bfd backend are indexed
+diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
+index a7e5476..bf7ddf6 100644
+--- a/bfd/elf32-microblaze.c
++++ b/bfd/elf32-microblaze.c
+@@ -251,6 +251,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
+ 	  0x0000ffff,		/* Dest Mask.  */
+ 	  TRUE),		/* PC relative offset?  */
+ 
++     /* A 64 bit TEXTPCREL relocation.  Table-entry not really used.  */
++   HOWTO (R_MICROBLAZE_TEXTPCREL_64,   	/* Type.  */
++          0,			/* Rightshift.  */
++          2,			/* Size (0 = byte, 1 = short, 2 = long).  */
++          16,			/* Bitsize.  */
++          TRUE,			/* PC_relative.  */
++          0,			/* Bitpos.  */
++          complain_overflow_dont, /* Complain on overflow.  */
++          bfd_elf_generic_reloc,	/* Special Function.  */
++          "R_MICROBLAZE_TEXTPCREL_64", 	/* Name.  */
++          FALSE,		/* Partial Inplace.  */
++          0,			/* Source Mask.  */
++          0x0000ffff,		/* Dest Mask.  */
++          TRUE), 		/* PC relative offset?  */
++
+    /* A 64 bit GOT relocation.  Table-entry not really used.  */
+    HOWTO (R_MICROBLAZE_GOT_64,  /* Type.  */
+ 	  0,			/* Rightshift.  */
+@@ -266,6 +281,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
+ 	  0x0000ffff,		/* Dest Mask.  */
+ 	  FALSE),		/* PC relative offset?  */
+ 
++    /* A 64 bit TEXTREL relocation.  Table-entry not really used.  */
++    HOWTO (R_MICROBLAZE_TEXTREL_64,  /* Type.  */
++           0,			/* Rightshift.  */
++           2,			/* Size (0 = byte, 1 = short, 2 = long).  */
++           16,			/* Bitsize.  */
++           FALSE,		/* PC_relative.  */
++           0,			/* Bitpos.  */
++           complain_overflow_dont, /* Complain on overflow.  */
++           bfd_elf_generic_reloc,/* Special Function.  */
++           "R_MICROBLAZE_TEXTREL_64",/* Name.  */
++           FALSE,		/* Partial Inplace.  */
++           0,			/* Source Mask.  */
++           0x0000ffff,		/* Dest Mask.  */
++           FALSE), 		/* PC relative offset?  */
++
+    /* A 64 bit PLT relocation.  Table-entry not really used.  */
+    HOWTO (R_MICROBLAZE_PLT_64,  /* Type.  */
+ 	  0,			/* Rightshift.  */
+@@ -578,6 +608,12 @@ microblaze_elf_reloc_type_lookup (bfd * abfd ATTRIBUTE_UNUSED,
+     case BFD_RELOC_MICROBLAZE_64_GOT:
+       microblaze_reloc = R_MICROBLAZE_GOT_64;
+       break;
++    case BFD_RELOC_MICROBLAZE_64_TEXTPCREL:
++      microblaze_reloc = R_MICROBLAZE_TEXTPCREL_64;
++      break;
++    case BFD_RELOC_MICROBLAZE_64_TEXTREL:
++      microblaze_reloc = R_MICROBLAZE_TEXTREL_64;
++      break;
+     case BFD_RELOC_MICROBLAZE_64_PLT:
+       microblaze_reloc = R_MICROBLAZE_PLT_64;
+       break;
+@@ -839,6 +875,56 @@ microblaze_elf_output_dynamic_relocation (bfd *output_bfd,
+ 	      (sreloc->contents + reloc_index * sizeof (Elf32_External_Rela)));
+ }
+ 
++#define BRLID_BRALID_OPCODE_MASK	0xFC1F0000
++#define BRLID_OPCODE			0xB8140000
++#define BRALID_OPCODE			0xB81C0000
++#define ADDK_OPCODE			0x10000000
++#define RD_MASK 			0x03E00000
++#define RA_MASK 			0x001F0000
++#define RB_MASK 			0x0000F800
++#define NOP				0x80000000
++#define R0				0x00
++#define R20				0x14
++
++/*
++ * This code is to replace relative branch instruction with absolute branch instruction
++ * in case of absolute address coming from external elf
++ */
++
++static void
++microblaze_bfd_write_branch_absolute_value_64 (bfd *abfd, bfd_byte *bfd_addr)
++{
++    unsigned long instr_lo;
++
++    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
++    if((instr_lo & BRLID_BRALID_OPCODE_MASK) == BRLID_OPCODE){
++    	instr_lo &= ~BRLID_BRALID_OPCODE_MASK;
++    	instr_lo |= BRALID_OPCODE;
++    }
++
++    bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
++}
++
++/*
++ * This code is to revert base register of instruction back to R0 instead of R20
++ * in case of absolute address coming from external elf and -mpic-data-text-rel option was invoked in compilation
++ */
++
++static void
++microblaze_bfd_revert_base_reg_value_64 (bfd *abfd, bfd_byte *bfd_addr)
++{
++    unsigned long instr_lo;
++    unsigned long base_reg;
++
++    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
++    base_reg = ((instr_lo & RA_MASK) >> 16);
++    if(base_reg == R20){
++    	instr_lo &= ~RA_MASK;
++    	instr_lo |= R0;
++    	bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
++    }
++  }
++
+ /* This code is taken from elf32-m32r.c
+    There is some attempt to make this function usable for many architectures,
+    both USE_REL and USE_RELA ['twould be nice if such a critter existed],
+@@ -1002,18 +1088,29 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 		 a merge section.  */
+ 	      addend = rel->r_addend;
+ 	    }
+-	  else
++	  else if((int)r_type != R_MICROBLAZE_TEXTPCREL_64) // no need to resolve _TEXT_START_ADDRESS
+ 	    {
+ 	      /* External symbol.  */
+ 	      bfd_boolean warned ATTRIBUTE_UNUSED;
+ 	      bfd_boolean ignored ATTRIBUTE_UNUSED;
+ 
+-	      RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
+-				       r_symndx, symtab_hdr, sym_hashes,
+-				       h, sec, relocation,
+-				       unresolved_reloc, warned, ignored);
+-	      sym_name = h->root.root.string;
+-	    }
++		  RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
++				  r_symndx, symtab_hdr, sym_hashes,
++				  h, sec, relocation,
++				  unresolved_reloc, warned, ignored);
++		  sym_name = h->root.root.string;
++
++		  if(info->adjust_insn_abs_refs && h->root.u.def.section->sec_info_type == SEC_INFO_TYPE_JUST_SYMS){ //symbol from external file
++			  if((int)r_type == R_MICROBLAZE_64_PCREL){ //Fix relative branches to be absolute
++				  r_type = R_MICROBLAZE_64;
++				  microblaze_bfd_write_branch_absolute_value_64(input_bfd, contents + offset);
++			  }
++			  else if((int) r_type == R_MICROBLAZE_TEXTREL_64){ // Fix base register to be r0 instead of r20
++				  r_type = R_MICROBLAZE_64;
++				  microblaze_bfd_revert_base_reg_value_64(input_bfd, contents + offset);
++			  }
++		  }
++	  }
+ 
+ 	  /* Sanity check the address.  */
+ 	  if (offset > bfd_get_section_limit (input_bfd, input_section))
+@@ -1126,9 +1223,15 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 	    case (int) R_MICROBLAZE_32_SYM_OP_SYM:
+ 	      break; /* Do nothing.  */
+ 
++	    case (int) R_MICROBLAZE_TEXTPCREL_64:
+ 	    case (int) R_MICROBLAZE_GOTPC_64:
+-	      relocation = (htab->elf.sgotplt->output_section->vma
+-			    + htab->elf.sgotplt->output_offset);
++	    if(r_type == R_MICROBLAZE_GOTPC_64){
++	    	relocation = htab->elf.sgotplt->output_section->vma
++	    		+ htab->elf.sgotplt->output_offset;
++	    }
++	    else if(r_type == R_MICROBLAZE_TEXTPCREL_64) {
++	    	relocation = input_section->output_section->vma;
++	    }
+ 	      relocation -= (input_section->output_section->vma
+ 			     + input_section->output_offset
+ 			     + offset + INST_WORD_SIZE);
+@@ -1389,6 +1492,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 	      bfd_put_16 (input_bfd, relocation & 0xffff,
+ 			  contents + offset + 2 + INST_WORD_SIZE);
+ 	      break;
++	    case (int) R_MICROBLAZE_TEXTREL_64:
++	    case (int) R_MICROBLAZE_TEXTREL_32_LO:
+ 	    case (int) R_MICROBLAZE_64_PCREL :
+ 	    case (int) R_MICROBLAZE_64:
+ 	    case (int) R_MICROBLAZE_32:
+@@ -1407,11 +1512,20 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 			  relocation -= (input_section->output_section->vma
+ 					 + input_section->output_offset
+ 					 + offset + INST_WORD_SIZE);
++			else if(r_type == R_MICROBLAZE_TEXTREL_64 || r_type == R_MICROBLAZE_TEXTREL_32_LO){
++			  relocation -= input_section->output_section->vma;
++			}
++			if(r_type == R_MICROBLAZE_TEXTREL_32_LO) {
++				bfd_put_16 (input_bfd, relocation & 0xffff,
++							            contents + offset + endian);
++			}
++			else {
+ 			bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
+-				    contents + offset + endian);
++			            contents + offset + endian);
+ 			bfd_put_16 (input_bfd, relocation & 0xffff,
+-				    contents + offset + endian + INST_WORD_SIZE);
+-		      }
++			            contents + offset + endian + INST_WORD_SIZE);
++		    	}
++		    }
+ 		    break;
+ 		  }
+ 
+@@ -1502,11 +1616,21 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 			  relocation -= (input_section->output_section->vma
+ 					 + input_section->output_offset
+ 					 + offset + INST_WORD_SIZE);
+-			bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
+-				    contents + offset + endian);
+-			bfd_put_16 (input_bfd, relocation & 0xffff,
+-				    contents + offset + endian + INST_WORD_SIZE);
+-		      }
++			else if(r_type == R_MICROBLAZE_TEXTREL_64 || r_type == R_MICROBLAZE_TEXTREL_32_LO){
++			  relocation -= input_section->output_section->vma;
++			}
++
++			if(r_type == R_MICROBLAZE_TEXTREL_32_LO) {
++				bfd_put_16 (input_bfd, relocation & 0xffff,
++				            contents + offset + endian);
++			}
++			else {
++				bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
++							contents + offset + endian);
++				bfd_put_16 (input_bfd, relocation & 0xffff,
++							contents + offset + endian + INST_WORD_SIZE);
++				}
++		    }
+ 		    break;
+ 		  }
+ 	      }
+@@ -1699,7 +1823,8 @@ microblaze_elf_relax_section (bfd *abfd,
+     {
+       bfd_vma symval;
+       if ((ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64_PCREL)
+-	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64 ))
++	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64 )
++	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_TEXTREL_64 ))
+ 	continue; /* Can't delete this reloc.  */
+ 
+       /* Get the section contents.  */
+@@ -1755,6 +1880,11 @@ microblaze_elf_relax_section (bfd *abfd,
+ 	       regular reloc processing.  */
+ 	    continue;
+ 
++          if(link_info->adjust_insn_abs_refs && h->root.u.def.section->sec_info_type == SEC_INFO_TYPE_JUST_SYMS)
++        	/** Just ignore symbol from external file
++        	 */
++        continue;
++
+ 	  symval = (h->root.u.def.value
+ 		    + h->root.u.def.section->output_section->vma
+ 		    + h->root.u.def.section->output_offset);
+@@ -1768,7 +1898,10 @@ microblaze_elf_relax_section (bfd *abfd,
+ 	    - (irel->r_offset
+ 	       + sec->output_section->vma
+ 	       + sec->output_offset);
+-	}
++    }
++      else if (ELF32_R_TYPE (irel->r_info) == (int) R_MICROBLAZE_TEXTREL_64) {
++    	  symval = symval + irel->r_addend - (sec->output_section->vma);
++      }
+       else
+ 	symval += irel->r_addend;
+ 
+@@ -1791,6 +1924,10 @@ microblaze_elf_relax_section (bfd *abfd,
+ 	      irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
+ 					   (int) R_MICROBLAZE_32_LO);
+ 	      break;
++	    case R_MICROBLAZE_TEXTREL_64:
++	                  irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
++	                                       (int) R_MICROBLAZE_TEXTREL_32_LO);
++	      break;
+ 	    default:
+ 	      /* Cannot happen.  */
+ 	      BFD_ASSERT (FALSE);
+@@ -1817,6 +1954,8 @@ microblaze_elf_relax_section (bfd *abfd,
+ 	      break;
+ 	    case R_MICROBLAZE_64_PCREL:
+ 	      break;
++	    case R_MICROBLAZE_TEXTREL_64:
++	    case R_MICROBLAZE_TEXTREL_32_LO:
+ 	    case R_MICROBLAZE_64:
+ 	    case R_MICROBLAZE_32_LO:
+ 	      /* If this reloc is against a symbol defined in this
+diff --git a/bfd/libbfd.h b/bfd/libbfd.h
+index 0fba5be..d164e79 100644
+--- a/bfd/libbfd.h
++++ b/bfd/libbfd.h
+@@ -2857,6 +2857,8 @@ static const char *const bfd_reloc_code_real_names[] = { "@@uninitialized@@",
+   "BFD_RELOC_MICROBLAZE_64_TLSDTPREL",
+   "BFD_RELOC_MICROBLAZE_64_TLSGOTTPREL",
+   "BFD_RELOC_MICROBLAZE_64_TLSTPREL",
++  "BFD_RELOC_MICROBLAZE_64_TEXTPCREL",
++  "BFD_RELOC_MICROBLAZE_64_TEXTREL",
+   "BFD_RELOC_AARCH64_RELOC_START",
+   "BFD_RELOC_AARCH64_NULL",
+   "BFD_RELOC_AARCH64_NONE",
+@@ -3244,3 +3246,4 @@ bfd_boolean _bfd_generic_verify_endian_match
+ #ifdef __cplusplus
+ }
+ #endif
++
+diff --git a/gas/config/tc-microblaze.c b/gas/config/tc-microblaze.c
+index 0194cd9..bd39616 100644
+--- a/gas/config/tc-microblaze.c
++++ b/gas/config/tc-microblaze.c
+@@ -87,6 +87,7 @@ const char FLT_CHARS[] = "rRsSfFdDxXpP";
+ #define TLSDTPREL_OFFSET     14
+ #define TLSGOTTPREL_OFFSET   15
+ #define TLSTPREL_OFFSET      16
++#define TEXT_OFFSET      	 17
+ 
+ /* Initialize the relax table.  */
+ const relax_typeS md_relax_table[] =
+@@ -107,7 +108,8 @@ const relax_typeS md_relax_table[] =
+   { 0x7fffffff, 0x80000000, INST_WORD_SIZE*1, 0 },  /* 13: TLSDTPMOD_OFFSET.  */
+   { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 14: TLSDTPREL_OFFSET.  */
+   { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 15: TLSGOTTPREL_OFFSET.  */
+-  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 }   /* 16: TLSTPREL_OFFSET.  */
++  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },   /* 16: TLSTPREL_OFFSET.  */
++  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 }   /* 17: TEXT_OFFSET.  */
+ };
+ 
+ static struct hash_control * opcode_hash_control;	/* Opcode mnemonics.  */
+@@ -624,7 +626,8 @@ parse_exp (char *s, expressionS *e)
+ #define IMM_TLSDTPMOD 6
+ #define IMM_TLSDTPREL 7
+ #define IMM_TLSTPREL  8
+-#define IMM_MAX    9
++#define IMM_TXTREL    9
++#define IMM_MAX    10
+ 
+ struct imm_type {
+ 	const char *isuffix;	 /* Suffix String */
+@@ -643,7 +646,8 @@ static struct imm_type imm_types[] = {
+ 	{ "TLSLDM", IMM_TLSLD, TLSLD_OFFSET },
+ 	{ "TLSDTPMOD", IMM_TLSDTPMOD, TLSDTPMOD_OFFSET },
+ 	{ "TLSDTPREL", IMM_TLSDTPREL, TLSDTPREL_OFFSET },
+-	{ "TLSTPREL", IMM_TLSTPREL, TLSTPREL_OFFSET }
++	{ "TLSTPREL", IMM_TLSTPREL, TLSTPREL_OFFSET },
++	{ "TXTREL", IMM_TXTREL, TEXT_OFFSET }
+ };
+ 
+ static int
+@@ -686,8 +690,10 @@ get_imm_otype (int itype)
+ }
+ 
+ static symbolS * GOT_symbol;
++static symbolS * TEXT_symbol;
+ 
+ #define GOT_SYMBOL_NAME "_GLOBAL_OFFSET_TABLE_"
++#define TEXT_SYMBOL_NAME "_TEXT_START_ADDR"
+ 
+ static char *
+ parse_imm (char * s, expressionS * e, offsetT min, offsetT max)
+@@ -737,6 +743,11 @@ parse_imm (char * s, expressionS * e, offsetT min, offsetT max)
+       GOT_symbol = symbol_find_or_make (GOT_SYMBOL_NAME);
+     }
+ 
++  if (!TEXT_symbol && ! strncmp (s, TEXT_SYMBOL_NAME, 15))
++  {
++	  TEXT_symbol = symbol_find_or_make (TEXT_SYMBOL_NAME);
++  }
++
+   if (e->X_op == O_absent)
+     ; /* An error message has already been emitted.  */
+   else if ((e->X_op != O_constant && e->X_op != O_symbol) )
+@@ -1885,6 +1896,9 @@ md_convert_frag (bfd * abfd ATTRIBUTE_UNUSED,
+       if (fragP->fr_symbol == GOT_symbol)
+         fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
+ 	         fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_GOTPC);
++      else if (fragP->fr_symbol == TEXT_symbol)
++        fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
++      	     fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_TEXTPCREL);
+       else
+         fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
+ 	         fragP->fr_offset, FALSE, BFD_RELOC_64);
+@@ -1921,6 +1935,12 @@ md_convert_frag (bfd * abfd ATTRIBUTE_UNUSED,
+       fragP->fr_fix += INST_WORD_SIZE * 2;
+       fragP->fr_var = 0;
+       break;
++    case TEXT_OFFSET:
++      fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
++    	   fragP->fr_offset, FALSE, BFD_RELOC_MICROBLAZE_64_TEXTREL);
++      fragP->fr_fix += INST_WORD_SIZE * 2;
++      fragP->fr_var = 0;
++      break;
+     case PLT_OFFSET:
+       fixP = fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
+ 	              fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_PLT);
+@@ -2097,6 +2117,7 @@ md_apply_fix (fixS *   fixP,
+       break;
+     case BFD_RELOC_64_PCREL:
+     case BFD_RELOC_64:
++    case BFD_RELOC_MICROBLAZE_64_TEXTREL:
+       /* Add an imm instruction.  First save the current instruction.  */
+       for (i = 0; i < INST_WORD_SIZE; i++)
+ 	buf[i + INST_WORD_SIZE] = buf[i];
+@@ -2144,6 +2165,7 @@ md_apply_fix (fixS *   fixP,
+     case BFD_RELOC_MICROBLAZE_64_GOT:
+     case BFD_RELOC_MICROBLAZE_64_PLT:
+     case BFD_RELOC_MICROBLAZE_64_GOTOFF:
++    case BFD_RELOC_MICROBLAZE_64_TEXTPCREL:
+       /* Add an imm instruction.  First save the current instruction.  */
+       for (i = 0; i < INST_WORD_SIZE; i++)
+ 	buf[i + INST_WORD_SIZE] = buf[i];
+@@ -2240,13 +2262,14 @@ md_estimate_size_before_relax (fragS * fragP,
+       break;
+ 
+     case INST_NO_OFFSET:
++    case TEXT_OFFSET:
+       /* Used to be a reference to somewhere which was unknown.  */
+       if (fragP->fr_symbol)
+         {
+ 	  if (fragP->fr_opcode == NULL)
+ 	    {
+               /* Used as an absolute value.  */
+-              fragP->fr_subtype = DEFINED_ABS_SEGMENT;
++              if(fragP->fr_subtype == INST_NO_OFFSET) fragP->fr_subtype = DEFINED_ABS_SEGMENT;
+               /* Variable part does not change.  */
+               fragP->fr_var = INST_WORD_SIZE*2;
+             }
+@@ -2418,6 +2441,8 @@ tc_gen_reloc (asection * section ATTRIBUTE_UNUSED, fixS * fixp)
+     case BFD_RELOC_MICROBLAZE_64_TLSDTPREL:
+     case BFD_RELOC_MICROBLAZE_64_TLSGOTTPREL:
+     case BFD_RELOC_MICROBLAZE_64_TLSTPREL:
++    case BFD_RELOC_MICROBLAZE_64_TEXTPCREL:
++    case BFD_RELOC_MICROBLAZE_64_TEXTREL:
+       code = fixp->fx_r_type;
+       break;
+ 
+@@ -2535,3 +2560,4 @@ cons_fix_new_microblaze (fragS * frag,
+     }
+   fix_new_exp (frag, where, size, exp, 0, r);
+ }
++
+diff --git a/include/bfdlink.h b/include/bfdlink.h
+index 5d637ac..fb1667e 100644
+--- a/include/bfdlink.h
++++ b/include/bfdlink.h
+@@ -439,6 +439,12 @@ struct bfd_link_info
+   /* TRUE if ok to have multiple definition.  */
+   unsigned int allow_multiple_definition: 1;
+ 
++  /* TRUE if ok to have prohibt multiple definition of absolute symbols.  */
++  unsigned int prohibt_multiple_definition_absolute: 1;
++
++  /* TRUE if ok to adapt instructions for abs references  */
++  unsigned int adjust_insn_abs_refs: 1;
++
+   /* TRUE if ok to have version with no definition.  */
+   unsigned int allow_undefined_version: 1;
+ 
+@@ -942,3 +948,4 @@ struct bfd_elf_dynamic_list
+ };
+ 
+ #endif
++
+diff --git a/include/elf/microblaze.h b/include/elf/microblaze.h
+index ae98099..6515f0c 100644
+--- a/include/elf/microblaze.h
++++ b/include/elf/microblaze.h
+@@ -58,7 +58,9 @@ START_RELOC_NUMBERS (elf_microblaze_reloc_type)
+   RELOC_NUMBER (R_MICROBLAZE_TLSDTPREL64, 27)   /* TLS Offset Within TLS Block */
+   RELOC_NUMBER (R_MICROBLAZE_TLSGOTTPREL32, 28) /* TLS Offset From Thread Pointer */
+   RELOC_NUMBER (R_MICROBLAZE_TLSTPREL32, 29)    /* TLS Offset From Thread Pointer */
+-   
++  RELOC_NUMBER (R_MICROBLAZE_TEXTPCREL_64, 30)    /* PC-relative TEXT offset */
++  RELOC_NUMBER (R_MICROBLAZE_TEXTREL_64, 31)    /* TEXT Entry offset 64-bit */
++  RELOC_NUMBER (R_MICROBLAZE_TEXTREL_32_LO, 32)    /* TEXT Entry offset 32-bit generated by relax option only */
+ END_RELOC_NUMBERS (R_MICROBLAZE_max)
+ 
+ /* Global base address names.  */
+@@ -69,3 +71,4 @@ END_RELOC_NUMBERS (R_MICROBLAZE_max)
+ #define SHF_MICROBLAZE_NOREAD	0x80000000
+ 
+ #endif /* _ELF_MICROBLAZE_H */
++
+diff --git a/ld/ldlex.h b/ld/ldlex.h
+index 1ecb152..4f5fe3a 100644
+--- a/ld/ldlex.h
++++ b/ld/ldlex.h
+@@ -143,6 +143,8 @@ enum option_values
+   OPTION_IGNORE_UNRESOLVED_SYMBOL,
+   OPTION_PUSH_STATE,
+   OPTION_POP_STATE,
++  OPTION_ADJUST_INSN_ABS_REFS,
++  OPTION_DISABLE_MULTIPLE_DEFS_ABS,
+   OPTION_PRINT_MEMORY_USAGE,
+   OPTION_REQUIRE_DEFINED_SYMBOL,
+   OPTION_ORPHAN_HANDLING,
+diff --git a/ld/ldmain.c b/ld/ldmain.c
+index 6945654..6c8f38d 100644
+--- a/ld/ldmain.c
++++ b/ld/ldmain.c
+@@ -273,6 +273,8 @@ main (int argc, char **argv)
+   link_info.keep_memory = TRUE;
+   link_info.combreloc = TRUE;
+   link_info.strip_discarded = TRUE;
++  link_info.prohibt_multiple_definition_absolute = FALSE;
++  link_info.adjust_insn_abs_refs = FALSE;
+   link_info.emit_hash = DEFAULT_EMIT_SYSV_HASH;
+   link_info.emit_gnu_hash = DEFAULT_EMIT_GNU_HASH;
+   link_info.callbacks = &link_callbacks;
+@@ -963,12 +965,13 @@ multiple_definition (struct bfd_link_info *info,
+      discarded, and this is not really a multiple definition at all.
+      FIXME: It would be cleaner to somehow ignore symbols defined in
+      sections which are being discarded.  */
+-  if ((osec->output_section != NULL
+-       && !bfd_is_abs_section (osec)
++  if (!info->prohibt_multiple_definition_absolute
++	&& ((osec->output_section != NULL
++       && ! bfd_is_abs_section (osec)
+        && bfd_is_abs_section (osec->output_section))
+       || (nsec->output_section != NULL
+ 	  && !bfd_is_abs_section (nsec)
+-	  && bfd_is_abs_section (nsec->output_section)))
++	  && bfd_is_abs_section (nsec->output_section))))
+     return;
+ 
+   name = h->root.string;
+diff --git a/ld/lexsup.c b/ld/lexsup.c
+index f219160..4d1cb7a 100644
+--- a/ld/lexsup.c
++++ b/ld/lexsup.c
+@@ -314,6 +314,12 @@ static const struct ld_option ld_options[] =
+   { {"demangle", optional_argument, NULL, OPTION_DEMANGLE},
+     '\0', N_("[=STYLE]"), N_("Demangle symbol names [using STYLE]"),
+     TWO_DASHES },
++  { {"adjust-insn-abs-refs", no_argument, NULL, OPTION_ADJUST_INSN_ABS_REFS},
++    '\0', NULL, N_("Adjust instruction when reloc contains a symbol from filename invoked by -R or --just-symbols"),
++    TWO_DASHES},
++  { {"disable-multiple-abs-defs", no_argument, NULL, OPTION_DISABLE_MULTIPLE_DEFS_ABS},
++    '\0', NULL, N_("Do not allow multiple definitions with symbols included in filename invoked by -R or --just-symbols"),
++    TWO_DASHES},
+   { {"embedded-relocs", no_argument, NULL, OPTION_EMBEDDED_RELOCS},
+     '\0', NULL, N_("Generate embedded relocs"), TWO_DASHES},
+   { {"fatal-warnings", no_argument, NULL, OPTION_WARN_FATAL},
+@@ -1159,6 +1165,12 @@ parse_args (unsigned argc, char **argv)
+ 	case OPTION_NO_STRIP_DISCARDED:
+ 	  link_info.strip_discarded = FALSE;
+ 	  break;
++	case OPTION_ADJUST_INSN_ABS_REFS:
++	  link_info.adjust_insn_abs_refs = TRUE;
++	  break;
++	case OPTION_DISABLE_MULTIPLE_DEFS_ABS:
++	  link_info.prohibt_multiple_definition_absolute = TRUE;
++	  break;
+ 	case OPTION_SHARED:
+ 	  if (config.has_shared)
+ 	    {

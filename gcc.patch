@@ -1,0 +1,551 @@
+Index: gcc/config/microblaze/microblaze-protos.h
+===================================================================
+--- gcc/config/microblaze/microblaze-protos.h	(revision 257881)
++++ gcc/config/microblaze/microblaze-protos.h	(working copy)
+@@ -24,6 +24,7 @@
+ 
+ #ifdef RTX_CODE
+ extern int pic_address_needs_scratch (rtx);
++extern bool microblaze_constant_address_p(rtx x);
+ extern void expand_block_move        (rtx *);
+ extern void microblaze_expand_prologue (void);
+ extern void microblaze_expand_epilogue (void);
+Index: gcc/config/microblaze/microblaze.c
+===================================================================
+--- gcc/config/microblaze/microblaze.c	(revision 257881)
++++ gcc/config/microblaze/microblaze.c	(working copy)
+@@ -91,7 +91,8 @@ enum microblaze_address_type
+   ADDRESS_SYMBOLIC,
+   ADDRESS_GOTOFF,
+   ADDRESS_PLT,
+-  ADDRESS_TLS
++  ADDRESS_TLS,
++  ADDRESS_SYMBOLIC_TXT_REL
+ };
+ 
+ /* Classifies symbols
+@@ -650,6 +651,9 @@ microblaze_classify_unspec (struct microblaze_addr
+       info->type = ADDRESS_TLS;
+       info->tls_type = tls_reloc (INTVAL (XVECEXP (x, 0, 1)));
+     }
++  else if (XINT (x, 1) == UNSPEC_TEXT){
++	info->type = ADDRESS_SYMBOLIC_TXT_REL;
++  }
+   else
+     {
+       return false;
+@@ -728,6 +732,7 @@ microblaze_classify_address (struct microblaze_add
+ {
+   rtx xplus0;
+   rtx xplus1;
++  rtx offset;
+ 
+   info->type = ADDRESS_INVALID;
+   info->regA = NULL;
+@@ -735,6 +740,7 @@ microblaze_classify_address (struct microblaze_add
+   info->offset = NULL;
+   info->symbol = NULL;
+   info->symbol_type = SYMBOL_TYPE_INVALID;
++  offset = NULL;
+ 
+   switch (GET_CODE (x))
+     {
+@@ -795,9 +801,12 @@ microblaze_classify_address (struct microblaze_add
+ 		/* for (plus x const_int) just look at x.  */
+ 		if (GET_CODE (xconst0) == PLUS
+ 		    && GET_CODE (XEXP (xconst0, 1)) == CONST_INT
+-		    && SMALL_INT (XEXP (xconst0, 1)))
++		    && (SMALL_INT (XEXP (xconst0, 1)) || GET_CODE (XEXP (xconst0, 0)) == UNSPEC))
+ 		  {
+-		    /* This is ok as info->symbol is set to xplus1 the full
++			 /* Hold CONST_INT Value in offset in case of UNSPEC + CONST_INT */
++			offset = XEXP (xconst0, 1);
++
++			/* This is ok as info->symbol is set to xplus1 the full
+ 		       const-expression below.  */
+ 		    xconst0 = XEXP (xconst0, 0);
+ 		  }
+@@ -814,6 +823,13 @@ microblaze_classify_address (struct microblaze_add
+ 		    return true;
+ 		  }
+ 
++		if(GET_CODE (xconst0) == UNSPEC && TARGET_PIC_DATA_TEXT_REL) {
++			if (GET_MODE_SIZE (mode) > UNITS_PER_WORD)
++				return false;
++			info->offset = offset;
++			return microblaze_classify_unspec(info, xconst0);
++		}
++
+ 		/* Not base + symbol || base + UNSPEC.  */
+ 		return false;
+ 
+@@ -891,8 +907,18 @@ microblaze_legitimate_address_p (machine_mode mode
+   struct microblaze_address_info addr;
+ 
+   return microblaze_classify_address (&addr, x, mode, strict);
++
+ }
+ 
++bool
++microblaze_constant_address_p(rtx x) {
++
++	return ((GET_CODE (x) == LABEL_REF) || (GET_CODE (x) == SYMBOL_REF)
++	    || GET_CODE (x) == CONST_INT
++	    || (GET_CODE (x) == CONST
++		&& ! (flag_pic && pic_address_needs_scratch (x))));
++}
++
+ int
+ microblaze_valid_pic_const (rtx x)
+ {
+@@ -910,8 +936,9 @@ microblaze_valid_pic_const (rtx x)
+ int
+ microblaze_legitimate_pic_operand (rtx x)
+ {
+-  if (flag_pic == 2 && (symbol_mentioned_p(x) || label_mentioned_p(x)))
+-    return 0;
++  if (flag_pic == 2 && (symbol_mentioned_p(x) || label_mentioned_p(x)) && !(TARGET_PIC_DATA_TEXT_REL && call_insn_operand(x,VOIDmode))) {
++	  return 0;
++  }
+ 
+   if (microblaze_tls_referenced_p(x))
+     return 0;
+@@ -1022,7 +1049,7 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
+ 
+ 		  return result;
+ 		}
+-	      else if (flag_pic == 2)
++	      else if (flag_pic == 2 && !TARGET_PIC_DATA_TEXT_REL)
+ 		{
+ 		  rtx pic_ref, reg;
+ 		  reg = gen_reg_rtx (Pmode);
+@@ -1036,6 +1063,18 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
+ 		  result = gen_rtx_PLUS (Pmode, xplus0, reg);
+ 		  return result;
+ 		}
++	      else if(flag_pic == 2 && TARGET_PIC_DATA_TEXT_REL)
++	    {
++	      rtx pic_ref, reg;
++	      reg = gen_reg_rtx (Pmode);
++	  	  pic_ref = gen_rtx_UNSPEC (Pmode, gen_rtvec (1, xplus1), UNSPEC_TEXT);
++	      pic_ref = gen_rtx_CONST (Pmode, pic_ref);
++	      emit_insn (gen_addsi3 (reg, pic_offset_table_rtx, xplus0));
++	      result = gen_rtx_PLUS (Pmode, reg, pic_ref);
++
++	      return result;
++
++	      }
+ 	    }
+ 	}
+     }
+@@ -1047,7 +1086,7 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
+         {
+           reg = microblaze_legitimize_tls_address (xinsn, NULL_RTX);
+         }
+-      else
++      else if (flag_pic == 2 && !TARGET_PIC_DATA_TEXT_REL)
+         {
+           rtx pic_ref;
+ 
+@@ -1060,6 +1099,18 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
+           pic_ref = gen_const_mem (Pmode, pic_ref);
+           reg = pic_ref;
+         }
++      else if(flag_pic == 2 && TARGET_PIC_DATA_TEXT_REL) {
++    	  rtx pic_ref;
++
++    	  if (reload_in_progress)
++    		  df_set_regs_ever_live (PIC_OFFSET_TABLE_REGNUM, true);
++
++    	  pic_ref = gen_rtx_UNSPEC (Pmode, gen_rtvec (1, xinsn), UNSPEC_TEXT);
++    	  pic_ref = gen_rtx_CONST (Pmode, pic_ref);
++    	  pic_ref = gen_rtx_PLUS (Pmode, pic_offset_table_rtx, pic_ref);
++    	  reg = pic_ref;
++
++      }
+       return reg;
+     }
+ 
+@@ -1388,6 +1439,7 @@ microblaze_address_insns (rtx x, machine_mode mode
+ 	case ADDRESS_REG_INDEX:
+ 	  return 1;
+ 	case ADDRESS_SYMBOLIC:
++	case ADDRESS_SYMBOLIC_TXT_REL:
+ 	case ADDRESS_GOTOFF:
+ 	  return 2;
+ 	case ADDRESS_TLS:
+@@ -2066,7 +2118,7 @@ compute_frame_size (HOST_WIDE_INT size)
+ 
+   total_size = var_size + args_size;
+ 
+-  if (flag_pic == 2)
++  if (flag_pic == 2 && !TARGET_PIC_DATA_TEXT_REL)
+     /* force setting GOT.  */
+     df_set_regs_ever_live (MB_ABI_PIC_ADDR_REGNUM, true);
+ 
+@@ -2322,6 +2374,7 @@ print_operand (FILE * file, rtx op, int letter)
+ 	    case ADDRESS_REG:
+ 	    case ADDRESS_CONST_INT:
+ 	    case ADDRESS_SYMBOLIC:
++	    case ADDRESS_SYMBOLIC_TXT_REL:
+ 	    case ADDRESS_GOTOFF:
+ 	    case ADDRESS_TLS:
+ 	      fputs ("i", file);
+@@ -2515,6 +2568,7 @@ print_operand_address (FILE * file, rtx addr)
+       output_addr_const (file, info.offset);
+       break;
+     case ADDRESS_SYMBOLIC:
++    case ADDRESS_SYMBOLIC_TXT_REL:
+     case ADDRESS_GOTOFF:
+     case ADDRESS_PLT:
+     case ADDRESS_TLS:
+@@ -2529,6 +2583,15 @@ print_operand_address (FILE * file, rtx addr)
+ 	{
+ 	  fputs ("@PLT", file);
+ 	}
++      else if (type == ADDRESS_SYMBOLIC_TXT_REL)
++    {
++    	if (info.offset != NULL && CONST_INT_P (info.offset) && INTVAL (info.offset) > 0)
++    	{
++    	  	fprintf (file, "+");
++    	  	output_addr_const (file, info.offset);
++    	}
++    	  fputs ("@TXTREL", file);
++    }
+       else if (type == ADDRESS_TLS)
+ 	{
+ 	  switch (info.tls_type)
+@@ -2960,8 +3023,14 @@ microblaze_expand_prologue (void)
+   if ((flag_pic == 2 || TLS_NEEDS_GOT )
+       && df_regs_ever_live_p (MB_ABI_PIC_ADDR_REGNUM))
+     {
+-      SET_REGNO (pic_offset_table_rtx, MB_ABI_PIC_ADDR_REGNUM);
+-      emit_insn (gen_set_got (pic_offset_table_rtx));	/* setting GOT.  */
++	  if((flag_pic == 2 && !TARGET_PIC_DATA_TEXT_REL) || TLS_NEEDS_GOT){
++    	  SET_REGNO (pic_offset_table_rtx, MB_ABI_PIC_ADDR_REGNUM);
++    	  emit_insn (gen_set_got (pic_offset_table_rtx));	/* setting GOT.  */
++      }
++      else {
++    	  SET_REGNO (pic_offset_table_rtx, MB_ABI_PIC_ADDR_REGNUM);
++    	  emit_insn(gen_set_text (pic_offset_table_rtx)); 	/* setting TEXT.  */
++      }
+     }
+ 
+   /* If we are profiling, make sure no instructions are scheduled before
+@@ -3154,7 +3223,15 @@ microblaze_elf_in_small_data_p (const_tree decl)
+   return (size > 0 && size <= microblaze_section_threshold);
+ }
+ 
++/* We need to disable address diff vectors in 
++case of pic data text relative mode */
+ 
++static bool
++microblaze_asm_generate_pic_addr_dif_vec (void)
++{
++	return (flag_pic && !TARGET_PIC_DATA_TEXT_REL);
++}
++
+ static section *
+ microblaze_select_section (tree decl, int reloc, unsigned HOST_WIDE_INT align)
+ {
+@@ -3187,10 +3264,11 @@ static rtx
+ expand_pic_symbol_ref (machine_mode mode ATTRIBUTE_UNUSED, rtx op)
+ {
+   rtx result;
+-  result = gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_GOTOFF);
++  result = (!TARGET_PIC_DATA_TEXT_REL)? gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_GOTOFF): gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_TEXT);
+   result = gen_rtx_CONST (Pmode, result);
+   result = gen_rtx_PLUS (Pmode, pic_offset_table_rtx, result);
+-  result = gen_const_mem (Pmode, result);
++  result = (!TARGET_PIC_DATA_TEXT_REL)? gen_const_mem (Pmode, result) : result;
++
+   return result;
+ }
+ 
+@@ -3912,6 +3990,9 @@ microblaze_starting_frame_offset (void)
+ #undef TARGET_LEGITIMATE_CONSTANT_P
+ #define TARGET_LEGITIMATE_CONSTANT_P microblaze_legitimate_constant_p
+ 
++#undef  TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC
++#define TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC	microblaze_asm_generate_pic_addr_dif_vec
++
+ #undef TARGET_MACHINE_DEPENDENT_REORG
+ #define TARGET_MACHINE_DEPENDENT_REORG microblaze_machine_dependent_reorg
+ 
+Index: gcc/config/microblaze/microblaze.h
+===================================================================
+--- gcc/config/microblaze/microblaze.h	(revision 257881)
++++ gcc/config/microblaze/microblaze.h	(working copy)
+@@ -518,11 +518,7 @@ typedef struct microblaze_args
+ 
+ /* Identify valid constant addresses.  Exclude if PIC addr which 
+    needs scratch register.  */
+-#define CONSTANT_ADDRESS_P(X)						\
+-  (GET_CODE (X) == LABEL_REF || GET_CODE (X) == SYMBOL_REF		\
+-    || GET_CODE (X) == CONST_INT 		                        \
+-    || (GET_CODE (X) == CONST						\
+-	&& ! (flag_pic && pic_address_needs_scratch (X))))
++#define CONSTANT_ADDRESS_P(X)	microblaze_constant_address_p(X)
+ 
+ /* Define this, so that when PIC, reload won't try to reload invalid
+    addresses which require two reload registers.  */
+Index: gcc/config/microblaze/microblaze.md
+===================================================================
+--- gcc/config/microblaze/microblaze.md	(revision 257881)
++++ gcc/config/microblaze/microblaze.md	(working copy)
+@@ -41,6 +41,8 @@
+   (UNSPEC_CMP		104)    ;; signed compare
+   (UNSPEC_CMPU		105)    ;; unsigned compare
+   (UNSPEC_TLS           106)    ;; jump table
++  (UNSPEC_SET_TEXT       107)    ;; set text start
++  (UNSPEC_TEXT       108)    ;; data text relative
+ ])
+ 
+ (define_c_enum "unspec" [
+@@ -1848,7 +1850,7 @@
+   {
+     gcc_assert (GET_MODE (operands[0]) == Pmode);
+ 
+-    if (!flag_pic)
++    if (!flag_pic || (flag_pic && TARGET_PIC_DATA_TEXT_REL))
+       emit_jump_insn (gen_tablejump_internal1 (operands[0], operands[1]));
+     else
+       emit_jump_insn (gen_tablejump_internal3 (operands[0], operands[1]));
+@@ -2053,7 +2055,7 @@
+   {
+     rtx addr = XEXP (operands[0], 0);
+ 
+-    if (flag_pic == 2 && GET_CODE (addr) == SYMBOL_REF 
++    if (flag_pic == 2 && !TARGET_PIC_DATA_TEXT_REL && GET_CODE (addr) == SYMBOL_REF 
+ 	&& !SYMBOL_REF_LOCAL_P (addr)) 
+       {
+         rtx temp = gen_rtx_UNSPEC (Pmode, gen_rtvec (1, addr), UNSPEC_PLT);
+@@ -2155,8 +2157,8 @@
+   ""
+   {
+     rtx addr = XEXP (operands[1], 0);
+-
+-    if (flag_pic == 2 && GET_CODE (addr) == SYMBOL_REF
++    
++    if (flag_pic == 2 && !TARGET_PIC_DATA_TEXT_REL && GET_CODE (addr) == SYMBOL_REF
+ 	&& !SYMBOL_REF_LOCAL_P (addr)) 
+       {
+         rtx temp = gen_rtx_UNSPEC (Pmode, gen_rtvec (1, addr), UNSPEC_PLT);
+@@ -2313,6 +2315,17 @@
+   [(set_attr "type" "multi")
+    (set_attr "length" "12")])
+ 
++;; The insn to set TEXT. The hardcoded number "8" accounts for $pc difference
++;; between "mfs" and "addik" instructions.
++(define_insn "set_text"
++  [(set (match_operand:SI 0 "register_operand" "=r")
++    (unspec:SI [(const_int 0)] UNSPEC_SET_TEXT))]
++  ""
++  "mfs\t%0,rpc\n\taddik\t%0,%0,_TEXT_START_ADDR+8"
++  [(set_attr "type" "multi")
++   (set_attr "length" "12")])
++
++
+ ;; This insn gives the count of leading number of zeros for the second
+ ;; operand and stores the result in first operand.
+ (define_insn "clzsi2"
+Index: gcc/config/microblaze/microblaze.opt
+===================================================================
+--- gcc/config/microblaze/microblaze.opt	(revision 257881)
++++ gcc/config/microblaze/microblaze.opt	(working copy)
+@@ -127,5 +127,9 @@ mxl-prefetch
+ Target Mask(PREFETCH)
+ Use hardware prefetch instruction
+ 
++mpic-data-text-rel
++Target Mask(PIC_DATA_TEXT_REL)
++This allows referencing data by offset from the start of text instead of GOT. It shall be invoked with -fPIC/-fPIE.
++
+ mxl-mode-xilkernel
+ Target
+Index: gcc/doc/tm.texi
+===================================================================
+--- gcc/doc/tm.texi	(revision 257881)
++++ gcc/doc/tm.texi	(working copy)
+@@ -7491,6 +7491,14 @@ when the target cannot support (some kinds of) dyn
+ in read-only sections even in executables.
+ @end deftypefn
+ 
++@deftypefn {Target Hook} bool TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC (void)
++Return a flag for either generating ADDR_DIF_VEC table
++ or ADDR_VEC table for jumps in case of -fPIC.
++
++The default version of this function returns true if flag_pic 
++is equal true and false otherwise
++@end deftypefn
++
+ @deftypefn {Target Hook} {section *} TARGET_ASM_SELECT_SECTION (tree @var{exp}, int @var{reloc}, unsigned HOST_WIDE_INT @var{align})
+ Return the section into which @var{exp} should be placed.  You can
+ assume that @var{exp} is either a @code{VAR_DECL} node or a constant of
+Index: gcc/doc/tm.texi.in
+===================================================================
+--- gcc/doc/tm.texi.in	(revision 257881)
++++ gcc/doc/tm.texi.in	(working copy)
+@@ -4922,6 +4922,8 @@ This macro is irrelevant if there is no separate r
+ 
+ @hook TARGET_ASM_RELOC_RW_MASK
+ 
++@hook TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC
++
+ @hook TARGET_ASM_SELECT_SECTION
+ 
+ @defmac USE_SELECT_SECTION_FOR_FUNCTIONS
+Index: gcc/stmt.c
+===================================================================
+--- gcc/stmt.c	(revision 257881)
++++ gcc/stmt.c	(working copy)
+@@ -847,7 +847,7 @@ emit_case_dispatch_table (tree index_expr, tree in
+   /* Output the table.  */
+   emit_label (table_label);
+ 
+-  if (CASE_VECTOR_PC_RELATIVE || flag_pic)
++  if (CASE_VECTOR_PC_RELATIVE || (flag_pic && targetm.asm_out.generate_pic_addr_diff_vec ()))
+     emit_jump_table_data (gen_rtx_ADDR_DIFF_VEC (CASE_VECTOR_MODE,
+ 						 gen_rtx_LABEL_REF (Pmode,
+ 								    table_label),
+Index: gcc/target.def
+===================================================================
+--- gcc/target.def	(revision 257881)
++++ gcc/target.def	(working copy)
+@@ -506,6 +506,19 @@ when the target cannot support (some kinds of) dyn
+ in read-only sections even in executables.",
+  int, (void),
+  default_reloc_rw_mask)
++ 
++ 
++ /* Return a flag for either generating ADDR_DIF_VEC table 
++ or ADDR_VEC table for jumps in case of -fPIC/-fPIE*/
++DEFHOOK
++(generate_pic_addr_diff_vec,
++ "Return a flag for either generating ADDR_DIF_VEC table\n\
++ or ADDR_VEC table for jumps in case of -fPIC.\n\
++\n\
++The default version of this function returns true if flag_pic \n\
++is equal true and false otherwise",
++ bool, (void),
++ default_generate_pic_addr_diff_vec)
+ 
+  /* Return a section for EXP.  It may be a DECL or a constant.  RELOC
+     is nonzero if runtime relocations must be applied; bit 1 will be
+Index: gcc/targhooks.c
+===================================================================
+--- gcc/targhooks.c	(revision 257881)
++++ gcc/targhooks.c	(working copy)
+@@ -1196,6 +1196,15 @@ default_reloc_rw_mask (void)
+   return flag_pic ? 3 : 0;
+ }
+ 
++/* By default, address diff vectors are generated
++for jump tables when flag_pic is true  */
++   
++bool
++default_generate_pic_addr_diff_vec (void)
++{
++  return true;
++}
++
+ /* By default, do no modification. */
+ tree default_mangle_decl_assembler_name (tree decl ATTRIBUTE_UNUSED,
+ 					 tree id)
+Index: gcc/targhooks.h
+===================================================================
+--- gcc/targhooks.h	(revision 257881)
++++ gcc/targhooks.h	(working copy)
+@@ -175,6 +175,7 @@ extern machine_mode default_secondary_memory_neede
+ extern void default_target_option_override (void);
+ extern void hook_void_bitmap (bitmap);
+ extern int default_reloc_rw_mask (void);
++extern bool default_generate_pic_addr_diff_vec (void);
+ extern tree default_mangle_decl_assembler_name (tree, tree);
+ extern tree default_emutls_var_fields (tree, tree *);
+ extern tree default_emutls_var_init (tree, tree, tree);
+Index: gcc/testsuite/gcc.target/microblaze/others/picdtr.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(nonexistent)
++++ gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(working copy)
+@@ -0,0 +1,80 @@
++/* { dg-options "-fPIE -mpic-data-text-rel" } */
++
++
++#define TEST_VAR(var,val) (var) = (val); if( (var) != (val)) return 0;
++
++int foo(unsigned int i);
++extern void abort(void);
++extern void exit(int);
++
++unsigned char data[8];
++long bigData[7];
++long var;
++typedef struct {int a; short b; long c[1000][1000]; long long d[3][3]; char e; } myDef;
++myDef def;
++const char* myString;
++
++/* { dg-final { scan-assembler "mfs\tr20,rpc" } } */
++/* { dg-final { scan-assembler "addik\tr20,r20,_TEXT_START_ADDR" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*L\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*L" } } */
++
++
++
++void foo2() {
++	var++;
++}
++
++int foo (unsigned int i) {
++
++	TEST_VAR(var,123)
++	TEST_VAR(data[i],77)
++	TEST_VAR(data[2],88)
++	TEST_VAR(def.a,897)
++	TEST_VAR(bigData[i],78)
++	TEST_VAR(bigData[2],777)
++	TEST_VAR(def.b,12333);
++	TEST_VAR(def.c[i][i],5);
++	TEST_VAR(def.c[0][1],7);
++	TEST_VAR(def.d[1][2],123);
++	TEST_VAR(def.e,7);
++	TEST_VAR(bigData[i+1],bigData[i*2]);
++
++	foo2();
++
++	myString = "Hello";
++
++	switch(i){
++
++	case 1: var += 2; break;
++	case 2: var += 3; break;
++	case 3: var += 5; break;
++	case 4: var += 7; break;
++	case 5: var += 8; break;
++	default: var = 0;
++
++	}
++
++	return 1;
++
++}
++
++int main() {
++
++	int result = foo(3);
++	if(result != 1 || var != 129) {
++		abort();
++	}
++
++	exit(0);
++
++}
++

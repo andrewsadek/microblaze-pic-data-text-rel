@@ -1,0 +1,37 @@
+2018-02-24 Andrew Sadek  <andrew.sadek.se@gmail.com>
+
+	Microblaze Target: PIC data text relative
+	* gcc/config/microblaze/microblaze.opt: add new option -mpic-data-text-rel.  	
+	* gcc/config/microblaze/microblaze-protos.h (microblaze_constant_address_p): 
+	Add microblaze_constant_address_p function instead of the macro in microblaze.h
+	* gcc/config/microblaze/microblaze.c (TARGET_PIC_DATA_TEXT_REL): New addressing mode
+	for data-text relative position indepenedent code.
+	(microblaze_classify_unspec): add 'UNSPEC_TEXT' case -> 'ADDRESS_SYMBOLIC_TXT_REL'.
+	(microblaze_classify_address): add handling for UNSPEC + CONST_INT.
+	(microblaze_legitimate_pic_operand): exclude function calls from pic operands
+	in case of TARGET_PIC_DATA_TEXT_REL option.
+	(microblaze_legitimize_address): generate 'UNSPEC_TEXT' for all possible 
+	addresses cases.
+	(microblaze_address_insns): add 'ADDRESS_SYMBOLIC_TXT_REL' case.
+	(print_operand): add 'ADDRESS_SYMBOLIC_TXT_REL' case.
+	(print_operand_address): add 'ADDRESS_SYMBOLIC_TXT_REL' case + handling for
+	'address + offset'.
+	(microblaze_expand_prologue): add new function prologue call for 'r20' assignation.
+	(microblaze_asm_generate_pic_addr_dif_vec): override new target hook 
+	'TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC' to disable address diff vector
+	table in case of TARGET_PIC_DATA_TEXT_REL.
+	(expand_pic_symbol_ref): add handling for 'UNSPEC_TEXT'.
+	* gcc/config/microblaze/microblaze.md (TARGET_PIC_DATA_TEXT_REL): Add new macros 'UNSPEC_TEXT',
+	'UNSPEC_SET_TEXT' + add rule for setting r20 in function prologue + exclude function calls 
+	from 'UNSPEC_PLT' in case of data text relative mode.
+	* gcc/doc/tm.texi.in (TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC): Add new target hook for generating
+	address diff vector tables in case of flag_pic.
+	* gcc/stmt.c (TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC): append new condition 
+	'targetm.asm_out.generate_pic_addr_diff_vec' to flag_pic in case of addr diff vector generation.
+	* gcc/target.def (TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC): add target hook definition.
+	* gcc/targhooks.h, gcc/targhooks.c (TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC): 
+	add default function for generate_pic_addr_diff_vec -> flag_pic.
+	
+	
+	 
+	 
