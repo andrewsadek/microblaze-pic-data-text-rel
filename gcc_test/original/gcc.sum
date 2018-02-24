@@ -1,0 +1,446 @@
+Test Run By andrew on Fri Feb 23 12:13:43 2018
+Target is microblaze-xilinx-elf
+Host   is x86_64-pc-linux-gnu
+
+		=== gcc tests ===
+
+Schedule of variations:
+    microblaze-qemu
+
+Running target microblaze-qemu
+Running /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/microblaze.exp ...
+PASS: gcc.target/microblaze/isa/bshift.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not pcmpeq
+PASS: gcc.target/microblaze/isa/div.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/div.c scan-assembler idiv
+PASS: gcc.target/microblaze/isa/div.c scan-assembler idivu
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not pcmpeq
+FAIL: gcc.target/microblaze/isa/fcmp1.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/fcmp1.c scan-assembler fcmp.(le|gt)\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+FAIL: gcc.target/microblaze/isa/fcmp2.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/fcmp2.c scan-assembler fcmp.(lt|ge)\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+FAIL: gcc.target/microblaze/isa/fcmp3.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/fcmp3.c scan-assembler fcmp.(eq|ne)\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+FAIL: gcc.target/microblaze/isa/fcmp4.c (test for excess errors)
+FAIL: gcc.target/microblaze/isa/fcmp4.c scan-assembler fcmp.eq\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fcmp4.c scan-assembler fcmp.le\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fcvt.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/fcvt.c scan-assembler flt\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fcvt.c scan-assembler fint\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fcvt.c scan-assembler fint\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/float.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/float.c scan-assembler fmul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/float.c scan-assembler fadd\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/float.c scan-assembler frsub\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/float.c scan-assembler fdiv\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fsqrt.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/fsqrt.c scan-assembler fsqrt\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler pcmpne\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler pcmpeq\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not pcmpeq
+PASS: gcc.target/microblaze/isa/mul.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not pcmpeq
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mulh\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mulhu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mulhsu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler pcmpne\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler pcmpeq\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mulh\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mulhu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mulhsu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not pcmpeq
+FAIL: gcc.target/microblaze/isa/nofcmp.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/nofcmp.c scan-assembler-not fcmp
+PASS: gcc.target/microblaze/isa/nofloat.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not fmul
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not fadd
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not frsub
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not fdiv
+PASS: gcc.target/microblaze/isa/pcmp.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler pcmpne
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler pcmpeq
+FAIL: gcc.target/microblaze/isa/vanilla.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not pcmpeq
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fmul
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fadd
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not frsub
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fdiv
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fcmp
+PASS: gcc.target/microblaze/others/break_handler.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O0   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O0   scan-assembler brki\tr16
+PASS: gcc.target/microblaze/others/break_handler.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O1   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O1   scan-assembler brki\tr16
+PASS: gcc.target/microblaze/others/break_handler.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O2   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O2   scan-assembler brki\tr16
+PASS: gcc.target/microblaze/others/break_handler.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O3   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O3   scan-assembler brki\tr16
+PASS: gcc.target/microblaze/others/break_handler.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -Os   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -Os   scan-assembler brki\tr16
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O0   scan-assembler brki\tr0,-1
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O1   scan-assembler brki\tr0,-1
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O2   scan-assembler brki\tr0,-1
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O3   scan-assembler brki\tr0,-1
+PASS: gcc.target/microblaze/others/builtin-trap.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -Os   scan-assembler brki\tr0,-1
+PASS: gcc.target/microblaze/others/data_var1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O0   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O1   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O2   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O3   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -Os   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var2.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O0   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var2.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O1   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var2.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O2   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var2.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O3   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var2.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -Os   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+PASS: gcc.target/microblaze/others/data_var3.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/data_var3.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/data_var3.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/data_var3.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/data_var3.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O0   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O0   scan-assembler-not rtsd
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O1   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O1   scan-assembler-not rtsd
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O2   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O2   scan-assembler-not rtsd
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O3   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O3   scan-assembler-not rtsd
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -Os   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -Os   scan-assembler-not rtsd
+PASS: gcc.target/microblaze/others/mem_reload.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/mem_reload.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/mem_reload.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/mem_reload.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/mem_reload.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O0   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O1   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O2   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O3   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -Os   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var2.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O0   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O1   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O2   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O3   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -Os   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O0   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O1   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O2   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O3   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var4.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -Os   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var5.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O0   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O1   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O2   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O3   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -Os   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+PASS: gcc.target/microblaze/others/strings1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O0   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+PASS: gcc.target/microblaze/others/strings1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O1   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+PASS: gcc.target/microblaze/others/strings1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O2   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+PASS: gcc.target/microblaze/others/strings1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O3   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+PASS: gcc.target/microblaze/others/strings1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -Os   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+
+		=== gcc Summary ===
+
+# of expected passes		416
+# of unexpected failures	12
+/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc  version 8.0.1 20180221 (experimental) (GCC) 
+

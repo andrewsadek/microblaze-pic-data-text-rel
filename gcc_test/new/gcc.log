@@ -1,0 +1,806 @@
+Test Run By andrew on Fri Feb 23 12:59:55 2018
+Target is microblaze-xilinx-elf
+Host   is x86_64-pc-linux-gnu
+
+		=== gcc tests ===
+
+Schedule of variations:
+    microblaze-qemu
+
+Running target microblaze-qemu
+Using /usr/share/dejagnu/baseboards/microblaze-qemu.exp as board description file for target.
+Using /usr/share/dejagnu/config/sim.exp as generic interface file for target.
+Using /usr/share/dejagnu/baseboards/basic-sim.exp as board description file for target.
+Using /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/config/default.exp as tool-and-target-specific interface file.
+Running /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/microblaze.exp ...
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/bshift.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mxl-barrel-shift -S -o bshift.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/bshift.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mxl-barrel-shift -S -o bshift.s
+PASS: gcc.target/microblaze/isa/bshift.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not pcmpeq
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/div.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mno-xl-soft-div -S -o div.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/div.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mno-xl-soft-div -S -o div.s
+PASS: gcc.target/microblaze/isa/div.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/div.c scan-assembler idiv
+PASS: gcc.target/microblaze/isa/div.c scan-assembler idivu
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/div.c scan-assembler-not pcmpeq
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp1.s
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp1.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp1.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+output is:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp1.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp1.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+FAIL: gcc.target/microblaze/isa/fcmp1.c (test for excess errors)
+Excess errors:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp1.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+PASS: gcc.target/microblaze/isa/fcmp1.c scan-assembler fcmp.(le|gt)\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp2.s
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp2.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp2.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+output is:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp2.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp2.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+FAIL: gcc.target/microblaze/isa/fcmp2.c (test for excess errors)
+Excess errors:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp2.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+PASS: gcc.target/microblaze/isa/fcmp2.c scan-assembler fcmp.(lt|ge)\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp3.s
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp3.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp3.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+output is:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp3.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp3.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+FAIL: gcc.target/microblaze/isa/fcmp3.c (test for excess errors)
+Excess errors:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp3.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+PASS: gcc.target/microblaze/isa/fcmp3.c scan-assembler fcmp.(eq|ne)\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp4.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp4.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp4.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mhard-float -S -o fcmp4.s
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp4.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp4.c:8:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+output is:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp4.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp4.c:8:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+FAIL: gcc.target/microblaze/isa/fcmp4.c (test for excess errors)
+Excess errors:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcmp4.c:8:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+FAIL: gcc.target/microblaze/isa/fcmp4.c scan-assembler fcmp.eq\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fcmp4.c scan-assembler fcmp.le\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcvt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mhard-float -mxl-float-convert -S -o fcvt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fcvt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mhard-float -mxl-float-convert -S -o fcvt.s
+PASS: gcc.target/microblaze/isa/fcvt.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/fcvt.c scan-assembler flt\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fcvt.c scan-assembler fint\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/fcvt.c scan-assembler fint\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/float.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mhard-float -S -o float.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/float.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mhard-float -S -o float.s
+PASS: gcc.target/microblaze/isa/float.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/float.c scan-assembler fmul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/float.c scan-assembler fadd\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/float.c scan-assembler frsub\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/float.c scan-assembler fdiv\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fsqrt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mhard-float -mxl-float-sqrt -S -o fsqrt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/fsqrt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mhard-float -mxl-float-sqrt -S -o fsqrt.s
+PASS: gcc.target/microblaze/isa/fsqrt.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/fsqrt.c scan-assembler fsqrt\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mul-bshift-pcmp.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mxl-barrel-shift -mno-xl-soft-mul -mxl-pattern-compare -S -o mul-bshift-pcmp.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mul-bshift-pcmp.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mxl-barrel-shift -mno-xl-soft-mul -mxl-pattern-compare -S -o mul-bshift-pcmp.s
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler pcmpne\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift-pcmp.c scan-assembler pcmpeq\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mul-bshift.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mxl-barrel-shift -mno-xl-soft-mul -S -o mul-bshift.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mul-bshift.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mxl-barrel-shift -mno-xl-soft-mul -S -o mul-bshift.s
+PASS: gcc.target/microblaze/isa/mul-bshift.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/mul-bshift.c scan-assembler-not pcmpeq
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mul.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mno-xl-soft-mul -S -o mul.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mul.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mno-xl-soft-mul -S -o mul.s
+PASS: gcc.target/microblaze/isa/mul.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/mul.c scan-assembler-not pcmpeq
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mulh-bshift-pcmp.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mxl-barrel-shift -mno-xl-soft-mul -mxl-pattern-compare -mxl-multiply-high -S -o mulh-bshift-pcmp.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mulh-bshift-pcmp.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mxl-barrel-shift -mno-xl-soft-mul -mxl-pattern-compare -mxl-multiply-high -S -o mulh-bshift-pcmp.s
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mulh\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mulhu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler mulhsu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bslli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bsll\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bsrai\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),25
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler bsra\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler pcmpne\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh-bshift-pcmp.c scan-assembler pcmpeq\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mulh.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mno-xl-soft-mul -mxl-multiply-high -S -o mulh.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/mulh.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mno-xl-soft-mul -mxl-multiply-high -S -o mulh.s
+PASS: gcc.target/microblaze/isa/mulh.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mul\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler muli\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),(0x[0-9a-fA-F]+|[+-]*[0-9]+)
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mulh\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mulhu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler mulhsu\tr([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1]),r([0-9]|[1-2][0-9]|3[0-1])[^0-9]
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/mulh.c scan-assembler-not pcmpeq
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofcmp.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a  -S -o nofcmp.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofcmp.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o nofcmp.s
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofcmp.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofcmp.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+output is:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofcmp.c: In function 'float_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofcmp.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+FAIL: gcc.target/microblaze/isa/nofcmp.c (test for excess errors)
+Excess errors:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofcmp.c:9:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+PASS: gcc.target/microblaze/isa/nofcmp.c scan-assembler-not fcmp
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofloat.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -msoft-float -S -o nofloat.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/nofloat.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -msoft-float -S -o nofloat.s
+PASS: gcc.target/microblaze/isa/nofloat.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not fmul
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not fadd
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not frsub
+PASS: gcc.target/microblaze/isa/nofloat.c scan-assembler-not fdiv
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/pcmp.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mxl-pattern-compare -S -o pcmp.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/pcmp.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mxl-pattern-compare -S -o pcmp.s
+PASS: gcc.target/microblaze/isa/pcmp.c (test for excess errors)
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler pcmpne
+PASS: gcc.target/microblaze/isa/pcmp.c scan-assembler pcmpeq
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/vanilla.c    -fno-diagnostics-show-caret -fdiagnostics-color=never   -O3 -mcpu=v6.00.a -mcpu=v6.00.a -S -o vanilla.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/vanilla.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -mcpu=v6.00.a -S -o vanilla.s
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/vanilla.c: In function 'float_cmp_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/vanilla.c:77:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+output is:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/vanilla.c: In function 'float_cmp_func':
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/vanilla.c:77:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+FAIL: gcc.target/microblaze/isa/vanilla.c (test for excess errors)
+Excess errors:
+/home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/isa/vanilla.c:77:9: warning: implicit declaration of function 'print' [-Wimplicit-function-declaration]
+
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mul\tr
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not muli
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mulh
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mulhu
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not mulhsu
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bslli
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bsll
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bsrai
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not bsra
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not idiv
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not idivu
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not pcmpne
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not pcmpeq
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fmul
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fadd
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not frsub
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fdiv
+PASS: gcc.target/microblaze/isa/vanilla.c scan-assembler-not fcmp
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o break_handler.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o break_handler.s
+PASS: gcc.target/microblaze/others/break_handler.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O0   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O0   scan-assembler brki\tr16
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o break_handler.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o break_handler.s
+PASS: gcc.target/microblaze/others/break_handler.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O1   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O1   scan-assembler brki\tr16
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o break_handler.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o break_handler.s
+PASS: gcc.target/microblaze/others/break_handler.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O2   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O2   scan-assembler brki\tr16
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o break_handler.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o break_handler.s
+PASS: gcc.target/microblaze/others/break_handler.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -O3   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -O3   scan-assembler brki\tr16
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o break_handler.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/break_handler.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o break_handler.s
+PASS: gcc.target/microblaze/others/break_handler.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/break_handler.c   -Os   scan-assembler rtbd\tr([0-9]|[1-2][0-9]|3[0-1]),8
+PASS: gcc.target/microblaze/others/break_handler.c   -Os   scan-assembler brki\tr16
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o builtin-trap.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o builtin-trap.s
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O0   scan-assembler brki\tr0,-1
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o builtin-trap.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o builtin-trap.s
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O1   scan-assembler brki\tr0,-1
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o builtin-trap.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o builtin-trap.s
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O2   scan-assembler brki\tr0,-1
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o builtin-trap.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o builtin-trap.s
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -O3   scan-assembler brki\tr0,-1
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o builtin-trap.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/builtin-trap.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o builtin-trap.s
+PASS: gcc.target/microblaze/others/builtin-trap.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/builtin-trap.c   -Os   scan-assembler brki\tr0,-1
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o data_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o data_var1.s
+PASS: gcc.target/microblaze/others/data_var1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O0   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o data_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o data_var1.s
+PASS: gcc.target/microblaze/others/data_var1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O1   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o data_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o data_var1.s
+PASS: gcc.target/microblaze/others/data_var1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O2   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o data_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o data_var1.s
+PASS: gcc.target/microblaze/others/data_var1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -O3   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o data_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o data_var1.s
+PASS: gcc.target/microblaze/others/data_var1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var1.c   -Os   scan-assembler .bss*
+PASS: gcc.target/microblaze/others/data_var1.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o data_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o data_var2.s
+PASS: gcc.target/microblaze/others/data_var2.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O0   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o data_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o data_var2.s
+PASS: gcc.target/microblaze/others/data_var2.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O1   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o data_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o data_var2.s
+PASS: gcc.target/microblaze/others/data_var2.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O2   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o data_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o data_var2.s
+PASS: gcc.target/microblaze/others/data_var2.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -O3   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o data_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o data_var2.s
+PASS: gcc.target/microblaze/others/data_var2.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var2.c   -Os   scan-assembler .data*
+PASS: gcc.target/microblaze/others/data_var2.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o data_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o data_var3.s
+PASS: gcc.target/microblaze/others/data_var3.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O0   scan-assembler .rodata*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o data_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o data_var3.s
+PASS: gcc.target/microblaze/others/data_var3.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O1   scan-assembler .rodata*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o data_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o data_var3.s
+PASS: gcc.target/microblaze/others/data_var3.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O2   scan-assembler .rodata*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o data_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o data_var3.s
+PASS: gcc.target/microblaze/others/data_var3.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -O3   scan-assembler .rodata*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o data_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/data_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o data_var3.s
+PASS: gcc.target/microblaze/others/data_var3.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/data_var3.c   -Os   scan-assembler .rodata*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o interrupt_handler_leaf.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o interrupt_handler_leaf.s
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O0   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O0   scan-assembler-not rtsd
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o interrupt_handler_leaf.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o interrupt_handler_leaf.s
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O1   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O1   scan-assembler-not rtsd
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o interrupt_handler_leaf.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o interrupt_handler_leaf.s
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O2   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O2   scan-assembler-not rtsd
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o interrupt_handler_leaf.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o interrupt_handler_leaf.s
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O3   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -O3   scan-assembler-not rtsd
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o interrupt_handler_leaf.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/interrupt_handler_leaf.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o interrupt_handler_leaf.s
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -Os   scan-assembler rtid\tr([0-9]|[1-2][0-9]|3[0-1]),0
+PASS: gcc.target/microblaze/others/interrupt_handler_leaf.c   -Os   scan-assembler-not rtsd
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -O2 -fPIC -S -o mem_reload.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -O2 -fPIC -S -o mem_reload.s
+PASS: gcc.target/microblaze/others/mem_reload.c   -O0  (test for excess errors)
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -O2 -fPIC -S -o mem_reload.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -O2 -fPIC -S -o mem_reload.s
+PASS: gcc.target/microblaze/others/mem_reload.c   -O1  (test for excess errors)
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -O2 -fPIC -S -o mem_reload.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -O2 -fPIC -S -o mem_reload.s
+PASS: gcc.target/microblaze/others/mem_reload.c   -O2  (test for excess errors)
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -O2 -fPIC -S -o mem_reload.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -O2 -fPIC -S -o mem_reload.s
+PASS: gcc.target/microblaze/others/mem_reload.c   -O3  (test for excess errors)
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -O2 -fPIC -S -o mem_reload.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/mem_reload.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -O2 -fPIC -S -o mem_reload.s
+PASS: gcc.target/microblaze/others/mem_reload.c   -Os  (test for excess errors)
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -fPIE -mpic-data-text-rel -S -o picdtr.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -fPIE -mpic-data-text-rel -S -o picdtr.s
+PASS: gcc.target/microblaze/others/picdtr.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler mfs\tr20,rpc
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*L
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -fPIE -mpic-data-text-rel -S -o picdtr.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -fPIE -mpic-data-text-rel -S -o picdtr.s
+PASS: gcc.target/microblaze/others/picdtr.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler mfs\tr20,rpc
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*L
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -fPIE -mpic-data-text-rel -S -o picdtr.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -fPIE -mpic-data-text-rel -S -o picdtr.s
+PASS: gcc.target/microblaze/others/picdtr.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler mfs\tr20,rpc
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*L
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -fPIE -mpic-data-text-rel -S -o picdtr.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -fPIE -mpic-data-text-rel -S -o picdtr.s
+PASS: gcc.target/microblaze/others/picdtr.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler mfs\tr20,rpc
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*L
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -fPIE -mpic-data-text-rel -S -o picdtr.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/picdtr.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -fPIE -mpic-data-text-rel -S -o picdtr.s
+PASS: gcc.target/microblaze/others/picdtr.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler mfs\tr20,rpc
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*L
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -S -o sdata_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -S -o sdata_var1.s
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O0   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -S -o sdata_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -S -o sdata_var1.s
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O1   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -S -o sdata_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -S -o sdata_var1.s
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O2   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -S -o sdata_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -S -o sdata_var1.s
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O3   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -S -o sdata_var1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -S -o sdata_var1.s
+PASS: gcc.target/microblaze/others/sdata_var1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var1.c   -Os   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var1.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -S -o sdata_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -S -o sdata_var2.s
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -S -o sdata_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -S -o sdata_var2.s
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -S -o sdata_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -S -o sdata_var2.s
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -S -o sdata_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -S -o sdata_var2.s
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -S -o sdata_var2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -S -o sdata_var2.s
+PASS: gcc.target/microblaze/others/sdata_var2.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var2.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var2.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -S -o sdata_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -S -o sdata_var3.s
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O0   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -S -o sdata_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -S -o sdata_var3.s
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O1   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -S -o sdata_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -S -o sdata_var3.s
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O2   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -S -o sdata_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -S -o sdata_var3.s
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O3   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -S -o sdata_var3.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -S -o sdata_var3.s
+PASS: gcc.target/microblaze/others/sdata_var3.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var3.c   -Os   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var3.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -G 16 -S -o sdata_var4.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -G 16 -S -o sdata_var4.s
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O0   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -G 16 -S -o sdata_var4.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -G 16 -S -o sdata_var4.s
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O1   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -G 16 -S -o sdata_var4.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -G 16 -S -o sdata_var4.s
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O2   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -G 16 -S -o sdata_var4.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -G 16 -S -o sdata_var4.s
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O3   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -G 16 -S -o sdata_var4.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -G 16 -S -o sdata_var4.s
+PASS: gcc.target/microblaze/others/sdata_var4.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var4.c   -Os   scan-assembler .sbss[^2]+
+PASS: gcc.target/microblaze/others/sdata_var4.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -G 16 -S -o sdata_var5.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -G 16 -S -o sdata_var5.s
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -G 16 -S -o sdata_var5.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -G 16 -S -o sdata_var5.s
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -G 16 -S -o sdata_var5.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -G 16 -S -o sdata_var5.s
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -G 16 -S -o sdata_var5.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -G 16 -S -o sdata_var5.s
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -G 16 -S -o sdata_var5.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -G 16 -S -o sdata_var5.s
+PASS: gcc.target/microblaze/others/sdata_var5.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var5.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/sdata_var5.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -G 16 -S -o sdata_var6.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -G 16 -S -o sdata_var6.s
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O0   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -G 16 -S -o sdata_var6.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -G 16 -S -o sdata_var6.s
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O1   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -G 16 -S -o sdata_var6.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -G 16 -S -o sdata_var6.s
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O2   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -G 16 -S -o sdata_var6.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -G 16 -S -o sdata_var6.s
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O3   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -G 16 -S -o sdata_var6.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -G 16 -S -o sdata_var6.s
+PASS: gcc.target/microblaze/others/sdata_var6.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/sdata_var6.c   -Os   scan-assembler .sdata2
+PASS: gcc.target/microblaze/others/sdata_var6.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r2
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o string_cst1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o string_cst1.s
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O0   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o string_cst1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o string_cst1.s
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O1   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o string_cst1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o string_cst1.s
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O2   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o string_cst1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o string_cst1.s
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -O3   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o string_cst1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o string_cst1.s
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst1.c   -Os   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -S -o string_cst1_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -S -o string_cst1_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -S -o string_cst1_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -S -o string_cst1_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -S -o string_cst1_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -S -o string_cst1_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -S -o string_cst1_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -S -o string_cst1_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -S -o string_cst1_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -S -o string_cst1_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst1_gpopt.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mcpu=v6.00.a -S -o string_cst2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mcpu=v6.00.a -S -o string_cst2.s
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O0   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mcpu=v6.00.a -S -o string_cst2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mcpu=v6.00.a -S -o string_cst2.s
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O1   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mcpu=v6.00.a -S -o string_cst2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mcpu=v6.00.a -S -o string_cst2.s
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O2   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mcpu=v6.00.a -S -o string_cst2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mcpu=v6.00.a -S -o string_cst2.s
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -O3   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mcpu=v6.00.a -S -o string_cst2.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mcpu=v6.00.a -S -o string_cst2.s
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os   scan-assembler .data*
+PASS: gcc.target/microblaze/others/string_cst2.c   -Os   scan-assembler-not lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -mxl-gp-opt -S -o string_cst2_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -mxl-gp-opt -S -o string_cst2_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -mxl-gp-opt -S -o string_cst2_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -mxl-gp-opt -S -o string_cst2_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -mxl-gp-opt -S -o string_cst2_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -mxl-gp-opt -S -o string_cst2_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -mxl-gp-opt -S -o string_cst2_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -mxl-gp-opt -S -o string_cst2_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -mxl-gp-opt -S -o string_cst2_gpopt.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -mxl-gp-opt -S -o string_cst2_gpopt.s
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os   scan-assembler .rodata*
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os   scan-assembler .sdata[^2]+
+PASS: gcc.target/microblaze/others/string_cst2_gpopt.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r13
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O0  -O3 -S -o strings1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O0 -O3 -S -o strings1.s
+PASS: gcc.target/microblaze/others/strings1.c   -O0  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O0   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O0   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O1  -O3 -S -o strings1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O1 -O3 -S -o strings1.s
+PASS: gcc.target/microblaze/others/strings1.c   -O1  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O1   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O1   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O2  -O3 -S -o strings1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O2 -O3 -S -o strings1.s
+PASS: gcc.target/microblaze/others/strings1.c   -O2  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O2   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O2   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -O3  -O3 -S -o strings1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -O3 -O3 -S -o strings1.s
+PASS: gcc.target/microblaze/others/strings1.c   -O3  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -O3   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -O3   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c    -fno-diagnostics-show-caret -fdiagnostics-color=never    -Os  -O3 -S -o strings1.s    (timeout = 5000)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/others/strings1.c -fno-diagnostics-show-caret -fdiagnostics-color=never -Os -O3 -S -o strings1.s
+PASS: gcc.target/microblaze/others/strings1.c   -Os  (test for excess errors)
+PASS: gcc.target/microblaze/others/strings1.c   -Os   scan-assembler .rodata*
+FAIL: gcc.target/microblaze/others/strings1.c   -Os   scan-assembler lwi\tr([0-9]|[1-2][0-9]|3[0-1]),r0,.LC*
+testcase /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/microblaze.exp completed in 2 seconds
+
+		=== gcc Summary ===
+
+# of expected passes		481
+# of unexpected failures	12
+Executing on host: /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc -v    (timeout = 300)
+spawn -ignore SIGHUP /home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc -v
+Using built-in specs.
+COLLECT_GCC=/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc
+COLLECT_LTO_WRAPPER=/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/libexec/gcc/microblaze-xilinx-elf/8.0.1/lto-wrapper
+Target: microblaze-xilinx-elf
+Configured with: ../../../../MASTERS/GNU/gcc/configure --target=microblaze-xilinx-elf --program-prefix=mb- --with-gnu-as --with-gnu-ld --enable-static --disable-shared --with-gmp=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-mpfr=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-mpc=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-isl=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-newlib --enable-languages=c,c++ --disable-multilib --disable-werror --disable-libssp --disable-nls --prefix=/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux : (reconfigured) ../../../../MASTERS/GNU/gcc/configure --target=microblaze-xilinx-elf --program-prefix=mb- --with-gnu-as --with-gnu-ld --enable-static --disable-shared --with-gmp=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-mpfr=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-mpc=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-isl=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-newlib --enable-languages=c,c++ --disable-multilib --disable-werror --disable-libssp --disable-nls --prefix=/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux : (reconfigured) ../../../../MASTERS/GNU/gcc/configure --target=microblaze-xilinx-elf --program-prefix=mb- --with-gnu-as --with-gnu-ld --enable-static --disable-shared --with-gmp=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-mpfr=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-mpc=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-isl=/home/andrew/gcc_workspace/work3/mb-linux-dep --with-newlib --disable-multilib --disable-werror --disable-libssp --disable-nls --prefix=/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux target_alias=microblaze-xilinx-elf --enable-languages=c,c++,lto --no-create --no-recursion
+Thread model: single
+gcc version 8.0.1 20180221 (experimental) (GCC) 
+/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc  version 8.0.1 20180221 (experimental) (GCC) 
+
+runtest completed at Fri Feb 23 12:59:58 2018
