@@ -1,5 +1,5 @@
 diff --git a/bfd/bfd-in2.h b/bfd/bfd-in2.h
-index 9742c1a..2102d68 100644
+index 9742c1ac7f..ca63bbe827 100644
 --- a/bfd/bfd-in2.h
 +++ b/bfd/bfd-in2.h
 @@ -5904,6 +5904,16 @@ to two words (uses imm instruction).  */
@@ -20,7 +20,7 @@ index 9742c1a..2102d68 100644
  relocation enumerators.  N.B. the order of the enumerators is
  important as several tables in the AArch64 bfd backend are indexed
 diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
-index a7e5476..bf7ddf6 100644
+index a7e5476651..33d49ff3a3 100644
 --- a/bfd/elf32-microblaze.c
 +++ b/bfd/elf32-microblaze.c
 @@ -251,6 +251,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
@@ -85,15 +85,15 @@ index a7e5476..bf7ddf6 100644
  }
  
 +#define BRLID_BRALID_OPCODE_MASK	0xFC1F0000
-+#define BRLID_OPCODE			0xB8140000
-+#define BRALID_OPCODE			0xB81C0000
-+#define ADDK_OPCODE			0x10000000
-+#define RD_MASK 			0x03E00000
-+#define RA_MASK 			0x001F0000
-+#define RB_MASK 			0x0000F800
-+#define NOP				0x80000000
-+#define R0				0x00
-+#define R20				0x14
++#define BRLID_OPCODE				0xB8140000
++#define BRALID_OPCODE				0xB81C0000
++#define ADDK_OPCODE					0x10000000
++#define RD_MASK 					0x03E00000
++#define RA_MASK 					0x001F0000
++#define RB_MASK 					0x0000F800
++#define NOP							0x80000000
++#define R0							0x00
++#define R20							0x14
 +
 +/*
 + * This code is to replace relative branch instruction with absolute branch instruction
@@ -137,14 +137,7 @@ index a7e5476..bf7ddf6 100644
  /* This code is taken from elf32-m32r.c
     There is some attempt to make this function usable for many architectures,
     both USE_REL and USE_RELA ['twould be nice if such a critter existed],
-@@ -1002,18 +1088,29 @@ microblaze_elf_relocate_section (bfd *output_bfd,
- 		 a merge section.  */
- 	      addend = rel->r_addend;
- 	    }
--	  else
-+	  else if((int)r_type != R_MICROBLAZE_TEXTPCREL_64) // no need to resolve _TEXT_START_ADDRESS
- 	    {
- 	      /* External symbol.  */
+@@ -1008,12 +1094,23 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	      bfd_boolean warned ATTRIBUTE_UNUSED;
  	      bfd_boolean ignored ATTRIBUTE_UNUSED;
  
@@ -307,7 +300,7 @@ index a7e5476..bf7ddf6 100644
  	    case R_MICROBLAZE_32_LO:
  	      /* If this reloc is against a symbol defined in this
 diff --git a/bfd/libbfd.h b/bfd/libbfd.h
-index 0fba5be..d164e79 100644
+index 0fba5bea3e..1d2007f519 100644
 --- a/bfd/libbfd.h
 +++ b/bfd/libbfd.h
 @@ -2857,6 +2857,8 @@ static const char *const bfd_reloc_code_real_names[] = { "@@uninitialized@@",
@@ -319,87 +312,62 @@ index 0fba5be..d164e79 100644
    "BFD_RELOC_AARCH64_RELOC_START",
    "BFD_RELOC_AARCH64_NULL",
    "BFD_RELOC_AARCH64_NONE",
-@@ -3244,3 +3246,4 @@ bfd_boolean _bfd_generic_verify_endian_match
- #ifdef __cplusplus
- }
- #endif
-+
 diff --git a/gas/config/tc-microblaze.c b/gas/config/tc-microblaze.c
-index 0194cd9..bd39616 100644
+index 0194cd9255..f19946ddb1 100644
 --- a/gas/config/tc-microblaze.c
 +++ b/gas/config/tc-microblaze.c
-@@ -87,6 +87,7 @@ const char FLT_CHARS[] = "rRsSfFdDxXpP";
+@@ -87,6 +87,8 @@ const char FLT_CHARS[] = "rRsSfFdDxXpP";
  #define TLSDTPREL_OFFSET     14
  #define TLSGOTTPREL_OFFSET   15
  #define TLSTPREL_OFFSET      16
 +#define TEXT_OFFSET      	 17
++#define TEXT_PC_OFFSET     	 18
  
  /* Initialize the relax table.  */
  const relax_typeS md_relax_table[] =
-@@ -107,7 +108,8 @@ const relax_typeS md_relax_table[] =
+@@ -107,7 +109,9 @@ const relax_typeS md_relax_table[] =
    { 0x7fffffff, 0x80000000, INST_WORD_SIZE*1, 0 },  /* 13: TLSDTPMOD_OFFSET.  */
    { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 14: TLSDTPREL_OFFSET.  */
    { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 15: TLSGOTTPREL_OFFSET.  */
 -  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 }   /* 16: TLSTPREL_OFFSET.  */
-+  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },   /* 16: TLSTPREL_OFFSET.  */
-+  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 }   /* 17: TEXT_OFFSET.  */
++  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 16: TLSTPREL_OFFSET.  */
++  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 },  /* 17: TEXT_OFFSET.  */
++  { 0x7fffffff, 0x80000000, INST_WORD_SIZE*2, 0 }   /* 18: TEXT_PC_OFFSET.  */
  };
  
  static struct hash_control * opcode_hash_control;	/* Opcode mnemonics.  */
-@@ -624,7 +626,8 @@ parse_exp (char *s, expressionS *e)
+@@ -624,7 +628,9 @@ parse_exp (char *s, expressionS *e)
  #define IMM_TLSDTPMOD 6
  #define IMM_TLSDTPREL 7
  #define IMM_TLSTPREL  8
 -#define IMM_MAX    9
 +#define IMM_TXTREL    9
-+#define IMM_MAX    10
++#define IMM_TXTPCREL  10
++#define IMM_MAX    11
  
  struct imm_type {
  	const char *isuffix;	 /* Suffix String */
-@@ -643,7 +646,8 @@ static struct imm_type imm_types[] = {
+@@ -643,7 +649,9 @@ static struct imm_type imm_types[] = {
  	{ "TLSLDM", IMM_TLSLD, TLSLD_OFFSET },
  	{ "TLSDTPMOD", IMM_TLSDTPMOD, TLSDTPMOD_OFFSET },
  	{ "TLSDTPREL", IMM_TLSDTPREL, TLSDTPREL_OFFSET },
 -	{ "TLSTPREL", IMM_TLSTPREL, TLSTPREL_OFFSET }
 +	{ "TLSTPREL", IMM_TLSTPREL, TLSTPREL_OFFSET },
-+	{ "TXTREL", IMM_TXTREL, TEXT_OFFSET }
++	{ "TXTREL", IMM_TXTREL, TEXT_OFFSET },
++	{ "TXTPCREL", IMM_TXTPCREL, TEXT_PC_OFFSET }
  };
  
  static int
-@@ -686,8 +690,10 @@ get_imm_otype (int itype)
- }
+@@ -1019,7 +1027,7 @@ md_assemble (char * str)
+       if (check_spl_reg (& reg2))
+ 	as_fatal (_("Cannot use special register with this instruction"));
  
- static symbolS * GOT_symbol;
-+static symbolS * TEXT_symbol;
- 
- #define GOT_SYMBOL_NAME "_GLOBAL_OFFSET_TABLE_"
-+#define TEXT_SYMBOL_NAME "_TEXT_START_ADDR"
- 
- static char *
- parse_imm (char * s, expressionS * e, offsetT min, offsetT max)
-@@ -737,6 +743,11 @@ parse_imm (char * s, expressionS * e, offsetT min, offsetT max)
-       GOT_symbol = symbol_find_or_make (GOT_SYMBOL_NAME);
-     }
- 
-+  if (!TEXT_symbol && ! strncmp (s, TEXT_SYMBOL_NAME, 15))
-+  {
-+	  TEXT_symbol = symbol_find_or_make (TEXT_SYMBOL_NAME);
-+  }
-+
-   if (e->X_op == O_absent)
-     ; /* An error message has already been emitted.  */
-   else if ((e->X_op != O_constant && e->X_op != O_symbol) )
-@@ -1885,6 +1896,9 @@ md_convert_frag (bfd * abfd ATTRIBUTE_UNUSED,
-       if (fragP->fr_symbol == GOT_symbol)
-         fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
- 	         fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_GOTPC);
-+      else if (fragP->fr_symbol == TEXT_symbol)
-+        fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
-+      	     fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_TEXTPCREL);
-       else
-         fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
- 	         fragP->fr_offset, FALSE, BFD_RELOC_64);
-@@ -1921,6 +1935,12 @@ md_convert_frag (bfd * abfd ATTRIBUTE_UNUSED,
+-      if (exp.X_op != O_constant)
++      if (exp.X_op != O_constant || exp.X_md == IMM_TXTPCREL)
+ 	{
+           const char *opc;
+ 	  relax_substateT subtype;
+@@ -1921,6 +1929,18 @@ md_convert_frag (bfd * abfd ATTRIBUTE_UNUSED,
        fragP->fr_fix += INST_WORD_SIZE * 2;
        fragP->fr_var = 0;
        break;
@@ -409,6 +377,12 @@ index 0194cd9..bd39616 100644
 +      fragP->fr_fix += INST_WORD_SIZE * 2;
 +      fragP->fr_var = 0;
 +      break;
++    case TEXT_PC_OFFSET:
++    	fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
++    			fragP->fr_offset, FALSE, BFD_RELOC_MICROBLAZE_64_TEXTPCREL);
++    	fragP->fr_fix += INST_WORD_SIZE * 2;
++    	fragP->fr_var = 0;
++    	break;
      case PLT_OFFSET:
        fixP = fix_new (fragP, fragP->fr_fix, INST_WORD_SIZE * 2, fragP->fr_symbol,
  	              fragP->fr_offset, TRUE, BFD_RELOC_MICROBLAZE_64_PLT);
@@ -444,7 +418,15 @@ index 0194cd9..bd39616 100644
                /* Variable part does not change.  */
                fragP->fr_var = INST_WORD_SIZE*2;
              }
-@@ -2418,6 +2441,8 @@ tc_gen_reloc (asection * section ATTRIBUTE_UNUSED, fixS * fixp)
+@@ -2318,6 +2341,7 @@ md_estimate_size_before_relax (fragS * fragP,
+     case GOT_OFFSET:
+     case PLT_OFFSET:
+     case GOTOFF_OFFSET:
++    case TEXT_PC_OFFSET:
+     case TLSGD_OFFSET:
+     case TLSLD_OFFSET:
+     case TLSTPREL_OFFSET:
+@@ -2418,6 +2442,8 @@ tc_gen_reloc (asection * section ATTRIBUTE_UNUSED, fixS * fixp)
      case BFD_RELOC_MICROBLAZE_64_TLSDTPREL:
      case BFD_RELOC_MICROBLAZE_64_TLSGOTTPREL:
      case BFD_RELOC_MICROBLAZE_64_TLSTPREL:
@@ -453,13 +435,8 @@ index 0194cd9..bd39616 100644
        code = fixp->fx_r_type;
        break;
  
-@@ -2535,3 +2560,4 @@ cons_fix_new_microblaze (fragS * frag,
-     }
-   fix_new_exp (frag, where, size, exp, 0, r);
- }
-+
 diff --git a/include/bfdlink.h b/include/bfdlink.h
-index 5d637ac..fb1667e 100644
+index 5d637acbab..13f24f098f 100644
 --- a/include/bfdlink.h
 +++ b/include/bfdlink.h
 @@ -439,6 +439,12 @@ struct bfd_link_info
@@ -475,13 +452,8 @@ index 5d637ac..fb1667e 100644
    /* TRUE if ok to have version with no definition.  */
    unsigned int allow_undefined_version: 1;
  
-@@ -942,3 +948,4 @@ struct bfd_elf_dynamic_list
- };
- 
- #endif
-+
 diff --git a/include/elf/microblaze.h b/include/elf/microblaze.h
-index ae98099..6515f0c 100644
+index ae98099d55..e3b754d4e9 100644
 --- a/include/elf/microblaze.h
 +++ b/include/elf/microblaze.h
 @@ -58,7 +58,9 @@ START_RELOC_NUMBERS (elf_microblaze_reloc_type)
@@ -495,13 +467,8 @@ index ae98099..6515f0c 100644
  END_RELOC_NUMBERS (R_MICROBLAZE_max)
  
  /* Global base address names.  */
-@@ -69,3 +71,4 @@ END_RELOC_NUMBERS (R_MICROBLAZE_max)
- #define SHF_MICROBLAZE_NOREAD	0x80000000
- 
- #endif /* _ELF_MICROBLAZE_H */
-+
 diff --git a/ld/ldlex.h b/ld/ldlex.h
-index 1ecb152..4f5fe3a 100644
+index 1ecb152be1..4f5fe3a123 100644
 --- a/ld/ldlex.h
 +++ b/ld/ldlex.h
 @@ -143,6 +143,8 @@ enum option_values
@@ -514,7 +481,7 @@ index 1ecb152..4f5fe3a 100644
    OPTION_REQUIRE_DEFINED_SYMBOL,
    OPTION_ORPHAN_HANDLING,
 diff --git a/ld/ldmain.c b/ld/ldmain.c
-index 6945654..6c8f38d 100644
+index 6945654c28..6c8f38dc2f 100644
 --- a/ld/ldmain.c
 +++ b/ld/ldmain.c
 @@ -273,6 +273,8 @@ main (int argc, char **argv)
@@ -544,7 +511,7 @@ index 6945654..6c8f38d 100644
  
    name = h->root.string;
 diff --git a/ld/lexsup.c b/ld/lexsup.c
-index f219160..4d1cb7a 100644
+index f2191602d4..4d1cb7aa01 100644
 --- a/ld/lexsup.c
 +++ b/ld/lexsup.c
 @@ -314,6 +314,12 @@ static const struct ld_option ld_options[] =

@@ -1,4 +1,4 @@
-Test Run By andrew on Fri Feb 23 12:59:55 2018
+Test run by asadek on Sun Feb 25 16:55:29 2018
 Target is microblaze-xilinx-elf
 Host   is x86_64-pc-linux-gnu
 
@@ -8,7 +8,7 @@ Schedule of variations:
     microblaze-qemu
 
 Running target microblaze-qemu
-Running /home/andrew/MASTERS/GNU/gcc/gcc/testsuite/gcc.target/microblaze/microblaze.exp ...
+Running /home/asadek/GNU/gcc/gcc/testsuite/gcc.target/microblaze/microblaze.exp ...
 PASS: gcc.target/microblaze/isa/bshift.c (test for excess errors)
 PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not mul\tr
 PASS: gcc.target/microblaze/isa/bshift.c scan-assembler-not muli
@@ -254,7 +254,7 @@ PASS: gcc.target/microblaze/others/mem_reload.c   -O3  (test for excess errors)
 PASS: gcc.target/microblaze/others/mem_reload.c   -Os  (test for excess errors)
 PASS: gcc.target/microblaze/others/picdtr.c   -O0  (test for excess errors)
 PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler mfs\tr20,rpc
-PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler addik\tr20,r20,8@TXTPCREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
 PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
@@ -267,7 +267,7 @@ PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*L[
 PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*L
 PASS: gcc.target/microblaze/others/picdtr.c   -O1  (test for excess errors)
 PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler mfs\tr20,rpc
-PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler addik\tr20,r20,8@TXTPCREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
 PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
@@ -280,7 +280,7 @@ PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*L[
 PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*L
 PASS: gcc.target/microblaze/others/picdtr.c   -O2  (test for excess errors)
 PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler mfs\tr20,rpc
-PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler addik\tr20,r20,8@TXTPCREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
 PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
@@ -293,7 +293,7 @@ PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*L[
 PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*L
 PASS: gcc.target/microblaze/others/picdtr.c   -O3  (test for excess errors)
 PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler mfs\tr20,rpc
-PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler addik\tr20,r20,8@TXTPCREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
 PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
@@ -306,7 +306,7 @@ PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*L[
 PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*L
 PASS: gcc.target/microblaze/others/picdtr.c   -Os  (test for excess errors)
 PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler mfs\tr20,rpc
-PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler addik\tr20,r20,8@TXTPCREL
 PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
 PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
@@ -507,5 +507,5 @@ FAIL: gcc.target/microblaze/others/strings1.c   -Os   scan-assembler lwi\tr([0-9
 
 # of expected passes		481
 # of unexpected failures	12
-/home/andrew/gcc_workspace/work3/mb-elf-toolchain-linux/bin/mb-gcc  version 8.0.1 20180221 (experimental) (GCC) 
+/home/asadek/work3/mb-elf-toolchain-linux/bin/mb-gcc  version 8.0.1 20180225 (experimental) (GCC) 
 

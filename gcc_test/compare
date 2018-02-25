@@ -1,4 +1,4 @@
-dg-cmp-results.sh: Verbosity is 2, Variant is ""
+dg-cmp-results.sh: Verbosity is 2, Variant is "microblaze"
 
 Older log file: original/gcc.sum
 Test Run By andrew on Fri Feb 23 12:13:43 2018
@@ -6,72 +6,72 @@ Target is microblaze-xilinx-elf
 Host   is x86_64-pc-linux-gnu
 
 Newer log file: new/gcc.sum
-Test Run By andrew on Fri Feb 23 12:59:55 2018
-Target is microblaze-xilinx-elf
+Test run by asadek on Sun Feb 25 16:55:29 2018
+Target is microblaze-unknown-elf
 Host   is x86_64-pc-linux-gnu
 
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler addik\tr20,r20,8@TXTPCREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler mfs\tr20,rpc
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*L
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler-not ,r0,[^\n]*var
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0  (test for excess errors)
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler addik\tr20,r20,8@TXTPCREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler mfs\tr20,rpc
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*L
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler-not ,r0,[^\n]*var
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O1  (test for excess errors)
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler addik\tr20,r20,8@TXTPCREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler mfs\tr20,rpc
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*L
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler-not ,r0,[^\n]*var
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O2  (test for excess errors)
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler addik\tr20,r20,8@TXTPCREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler mfs\tr20,rpc
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*L
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler-not ,r0,[^\n]*var
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O3  (test for excess errors)
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler addik\tr20,r20,_TEXT_START_ADDR
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
+NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler addik\tr20,r20,8@TXTPCREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler mfs\tr20,rpc
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*L
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler-not ,r0,[^\n]*var
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
-NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os   scan-assembler ,r20,[^\n]*var[^\n]*@TXTREL
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -Os  (test for excess errors)
