@@ -37,7 +37,7 @@ Assembly with -O1 -fPIE/-fPIC -mpic-data-text-rel
    8:   fa81001c        swi     r20, r1, 28
    c:   96808000        mfs     r20, rpc
   10:   b0000000        imm     0
-                        10: R_MICROBLAZE_TEXTPCREL_64   _TEXT_START_ADDR+0x8
+                        10: R_MICROBLAZE_TEXTPCREL_64  *ABS*+0x8
   14:   32940000        addik   r20, r20, 0
   18:   30600064        addik   r3, r0, 100
   1c:   b0000000        imm     0
