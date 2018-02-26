@@ -14,7 +14,7 @@ Index: gcc/config/microblaze/microblaze.c
 ===================================================================
 --- gcc/config/microblaze/microblaze.c	(revision 257967)
 +++ gcc/config/microblaze/microblaze.c	(working copy)
-@@ -91,7 +91,8 @@
+@@ -91,7 +91,8 @@ enum microblaze_address_type
    ADDRESS_SYMBOLIC,
    ADDRESS_GOTOFF,
    ADDRESS_PLT,
@@ -24,7 +24,7 @@ Index: gcc/config/microblaze/microblaze.c
  };
  
  /* Classifies symbols
-@@ -650,6 +651,9 @@
+@@ -650,6 +651,9 @@ microblaze_classify_unspec (struct microblaze_addr
        info->type = ADDRESS_TLS;
        info->tls_type = tls_reloc (INTVAL (XVECEXP (x, 0, 1)));
      }
@@ -34,7 +34,7 @@ Index: gcc/config/microblaze/microblaze.c
    else
      {
        return false;
-@@ -728,6 +732,7 @@
+@@ -728,6 +732,7 @@ microblaze_classify_address (struct microblaze_add
  {
    rtx xplus0;
    rtx xplus1;
@@ -42,7 +42,7 @@ Index: gcc/config/microblaze/microblaze.c
  
    info->type = ADDRESS_INVALID;
    info->regA = NULL;
-@@ -735,6 +740,7 @@
+@@ -735,6 +740,7 @@ microblaze_classify_address (struct microblaze_add
    info->offset = NULL;
    info->symbol = NULL;
    info->symbol_type = SYMBOL_TYPE_INVALID;
@@ -50,7 +50,7 @@ Index: gcc/config/microblaze/microblaze.c
  
    switch (GET_CODE (x))
      {
-@@ -795,9 +801,12 @@
+@@ -795,9 +801,12 @@ microblaze_classify_address (struct microblaze_add
  		/* for (plus x const_int) just look at x.  */
  		if (GET_CODE (xconst0) == PLUS
  		    && GET_CODE (XEXP (xconst0, 1)) == CONST_INT
@@ -65,7 +65,7 @@ Index: gcc/config/microblaze/microblaze.c
  		       const-expression below.  */
  		    xconst0 = XEXP (xconst0, 0);
  		  }
-@@ -814,6 +823,13 @@
+@@ -814,6 +823,13 @@ microblaze_classify_address (struct microblaze_add
  		    return true;
  		  }
  
@@ -79,7 +79,7 @@ Index: gcc/config/microblaze/microblaze.c
  		/* Not base + symbol || base + UNSPEC.  */
  		return false;
  
-@@ -891,8 +907,18 @@
+@@ -891,8 +907,18 @@ microblaze_legitimate_address_p (machine_mode mode
    struct microblaze_address_info addr;
  
    return microblaze_classify_address (&addr, x, mode, strict);
@@ -98,7 +98,7 @@ Index: gcc/config/microblaze/microblaze.c
  int
  microblaze_valid_pic_const (rtx x)
  {
-@@ -910,8 +936,9 @@
+@@ -910,8 +936,9 @@ microblaze_valid_pic_const (rtx x)
  int
  microblaze_legitimate_pic_operand (rtx x)
  {
@@ -110,7 +110,7 @@ Index: gcc/config/microblaze/microblaze.c
  
    if (microblaze_tls_referenced_p(x))
      return 0;
-@@ -1022,7 +1049,7 @@
+@@ -1022,7 +1049,7 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
  
  		  return result;
  		}
@@ -119,7 +119,7 @@ Index: gcc/config/microblaze/microblaze.c
  		{
  		  rtx pic_ref, reg;
  		  reg = gen_reg_rtx (Pmode);
-@@ -1036,6 +1063,18 @@
+@@ -1036,6 +1063,18 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
  		  result = gen_rtx_PLUS (Pmode, xplus0, reg);
  		  return result;
  		}
@@ -138,7 +138,7 @@ Index: gcc/config/microblaze/microblaze.c
  	    }
  	}
      }
-@@ -1047,7 +1086,7 @@
+@@ -1047,7 +1086,7 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
          {
            reg = microblaze_legitimize_tls_address (xinsn, NULL_RTX);
          }
@@ -147,7 +147,7 @@ Index: gcc/config/microblaze/microblaze.c
          {
            rtx pic_ref;
  
-@@ -1060,6 +1099,18 @@
+@@ -1060,6 +1099,18 @@ microblaze_legitimize_address (rtx x, rtx oldx ATT
            pic_ref = gen_const_mem (Pmode, pic_ref);
            reg = pic_ref;
          }
@@ -166,7 +166,7 @@ Index: gcc/config/microblaze/microblaze.c
        return reg;
      }
  
-@@ -1388,6 +1439,7 @@
+@@ -1388,6 +1439,7 @@ microblaze_address_insns (rtx x, machine_mode mode
  	case ADDRESS_REG_INDEX:
  	  return 1;
  	case ADDRESS_SYMBOLIC:
@@ -174,7 +174,7 @@ Index: gcc/config/microblaze/microblaze.c
  	case ADDRESS_GOTOFF:
  	  return 2;
  	case ADDRESS_TLS:
-@@ -2066,7 +2118,7 @@
+@@ -2066,7 +2118,7 @@ compute_frame_size (HOST_WIDE_INT size)
  
    total_size = var_size + args_size;
  
@@ -183,7 +183,7 @@ Index: gcc/config/microblaze/microblaze.c
      /* force setting GOT.  */
      df_set_regs_ever_live (MB_ABI_PIC_ADDR_REGNUM, true);
  
-@@ -2322,6 +2374,7 @@
+@@ -2322,6 +2374,7 @@ print_operand (FILE * file, rtx op, int letter)
  	    case ADDRESS_REG:
  	    case ADDRESS_CONST_INT:
  	    case ADDRESS_SYMBOLIC:
@@ -191,7 +191,7 @@ Index: gcc/config/microblaze/microblaze.c
  	    case ADDRESS_GOTOFF:
  	    case ADDRESS_TLS:
  	      fputs ("i", file);
-@@ -2515,6 +2568,7 @@
+@@ -2515,6 +2568,7 @@ print_operand_address (FILE * file, rtx addr)
        output_addr_const (file, info.offset);
        break;
      case ADDRESS_SYMBOLIC:
@@ -199,7 +199,7 @@ Index: gcc/config/microblaze/microblaze.c
      case ADDRESS_GOTOFF:
      case ADDRESS_PLT:
      case ADDRESS_TLS:
-@@ -2529,6 +2583,15 @@
+@@ -2529,6 +2583,15 @@ print_operand_address (FILE * file, rtx addr)
  	{
  	  fputs ("@PLT", file);
  	}
@@ -215,7 +215,7 @@ Index: gcc/config/microblaze/microblaze.c
        else if (type == ADDRESS_TLS)
  	{
  	  switch (info.tls_type)
-@@ -2960,8 +3023,14 @@
+@@ -2960,8 +3023,14 @@ microblaze_expand_prologue (void)
    if ((flag_pic == 2 || TLS_NEEDS_GOT )
        && df_regs_ever_live_p (MB_ABI_PIC_ADDR_REGNUM))
      {
@@ -232,7 +232,7 @@ Index: gcc/config/microblaze/microblaze.c
      }
  
    /* If we are profiling, make sure no instructions are scheduled before
-@@ -3154,7 +3223,15 @@
+@@ -3154,7 +3223,15 @@ microblaze_elf_in_small_data_p (const_tree decl)
    return (size > 0 && size <= microblaze_section_threshold);
  }
  
@@ -248,7 +248,7 @@ Index: gcc/config/microblaze/microblaze.c
  static section *
  microblaze_select_section (tree decl, int reloc, unsigned HOST_WIDE_INT align)
  {
-@@ -3187,10 +3264,11 @@
+@@ -3187,10 +3264,11 @@ static rtx
  expand_pic_symbol_ref (machine_mode mode ATTRIBUTE_UNUSED, rtx op)
  {
    rtx result;
@@ -262,7 +262,7 @@ Index: gcc/config/microblaze/microblaze.c
    return result;
  }
  
-@@ -3912,6 +3990,9 @@
+@@ -3912,6 +3990,9 @@ microblaze_starting_frame_offset (void)
  #undef TARGET_LEGITIMATE_CONSTANT_P
  #define TARGET_LEGITIMATE_CONSTANT_P microblaze_legitimate_constant_p
  
@@ -276,7 +276,7 @@ Index: gcc/config/microblaze/microblaze.h
 ===================================================================
 --- gcc/config/microblaze/microblaze.h	(revision 257967)
 +++ gcc/config/microblaze/microblaze.h	(working copy)
-@@ -518,11 +518,7 @@
+@@ -518,11 +518,7 @@ typedef struct microblaze_args
  
  /* Identify valid constant addresses.  Exclude if PIC addr which 
     needs scratch register.  */
@@ -353,7 +353,7 @@ Index: gcc/config/microblaze/microblaze.opt
 ===================================================================
 --- gcc/config/microblaze/microblaze.opt	(revision 257967)
 +++ gcc/config/microblaze/microblaze.opt	(working copy)
-@@ -127,5 +127,9 @@
+@@ -127,5 +127,9 @@ mxl-prefetch
  Target Mask(PREFETCH)
  Use hardware prefetch instruction
  
@@ -367,7 +367,7 @@ Index: gcc/doc/tm.texi
 ===================================================================
 --- gcc/doc/tm.texi	(revision 257967)
 +++ gcc/doc/tm.texi	(working copy)
-@@ -7491,6 +7491,14 @@
+@@ -7491,6 +7491,14 @@ when the target cannot support (some kinds of) dyn
  in read-only sections even in executables.
  @end deftypefn
  
@@ -386,7 +386,7 @@ Index: gcc/doc/tm.texi.in
 ===================================================================
 --- gcc/doc/tm.texi.in	(revision 257967)
 +++ gcc/doc/tm.texi.in	(working copy)
-@@ -4922,6 +4922,8 @@
+@@ -4922,6 +4922,8 @@ This macro is irrelevant if there is no separate r
  
  @hook TARGET_ASM_RELOC_RW_MASK
  
@@ -399,7 +399,7 @@ Index: gcc/stmt.c
 ===================================================================
 --- gcc/stmt.c	(revision 257967)
 +++ gcc/stmt.c	(working copy)
-@@ -847,7 +847,7 @@
+@@ -847,7 +847,7 @@ emit_case_dispatch_table (tree index_expr, tree in
    /* Output the table.  */
    emit_label (table_label);
  
@@ -412,7 +412,7 @@ Index: gcc/target.def
 ===================================================================
 --- gcc/target.def	(revision 257967)
 +++ gcc/target.def	(working copy)
-@@ -506,6 +506,19 @@
+@@ -506,6 +506,19 @@ when the target cannot support (some kinds of) dyn
  in read-only sections even in executables.",
   int, (void),
   default_reloc_rw_mask)
@@ -436,7 +436,7 @@ Index: gcc/targhooks.c
 ===================================================================
 --- gcc/targhooks.c	(revision 257967)
 +++ gcc/targhooks.c	(working copy)
-@@ -1196,6 +1196,15 @@
+@@ -1196,6 +1196,15 @@ default_reloc_rw_mask (void)
    return flag_pic ? 3 : 0;
  }
  
@@ -456,7 +456,7 @@ Index: gcc/targhooks.h
 ===================================================================
 --- gcc/targhooks.h	(revision 257967)
 +++ gcc/targhooks.h	(working copy)
-@@ -175,6 +175,7 @@
+@@ -175,6 +175,7 @@ extern machine_mode default_secondary_memory_neede
  extern void default_target_option_override (void);
  extern void hook_void_bitmap (bitmap);
  extern int default_reloc_rw_mask (void);

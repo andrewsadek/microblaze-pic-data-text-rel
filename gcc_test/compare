@@ -7,7 +7,7 @@ Host   is x86_64-pc-linux-gnu
 
 Newer log file: new/gcc.sum
 Test run by asadek on Sun Feb 25 16:55:29 2018
-Target is microblaze-unknown-elf
+Target is microblaze-xilinx-elf
 Host   is x86_64-pc-linux-gnu
 
 NA->PASS: gcc.target/microblaze/others/picdtr.c   -O0   scan-assembler ,r20,[^\n]*L[^\n]*@TXTREL
