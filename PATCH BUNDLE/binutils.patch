@@ -20,7 +20,7 @@ index 9742c1ac7f..ca63bbe827 100644
  relocation enumerators.  N.B. the order of the enumerators is
  important as several tables in the AArch64 bfd backend are indexed
 diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
-index a7e5476651..33d49ff3a3 100644
+index a7e5476651..703424285a 100644
 --- a/bfd/elf32-microblaze.c
 +++ b/bfd/elf32-microblaze.c
 @@ -251,6 +251,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
@@ -80,7 +80,7 @@ index a7e5476651..33d49ff3a3 100644
      case BFD_RELOC_MICROBLAZE_64_PLT:
        microblaze_reloc = R_MICROBLAZE_PLT_64;
        break;
-@@ -839,6 +875,56 @@ microblaze_elf_output_dynamic_relocation (bfd *output_bfd,
+@@ -839,6 +875,59 @@ microblaze_elf_output_dynamic_relocation (bfd *output_bfd,
  	      (sreloc->contents + reloc_index * sizeof (Elf32_External_Rela)));
  }
  
@@ -96,9 +96,9 @@ index a7e5476651..33d49ff3a3 100644
 +#define R20							0x14
 +
 +/*
-+ * This code is to replace relative branch instruction with absolute branch instruction
-+ * in case of absolute address coming from external elf
-+ */
++This code is to replace relative branch instruction with absolute
++branch instruction in case of absolute address coming from external elf
++*/
 +
 +static void
 +microblaze_bfd_write_branch_absolute_value_64 (bfd *abfd, bfd_byte *bfd_addr)
@@ -106,18 +106,20 @@ index a7e5476651..33d49ff3a3 100644
 +    unsigned long instr_lo;
 +
 +    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
-+    if((instr_lo & BRLID_BRALID_OPCODE_MASK) == BRLID_OPCODE){
-+    	instr_lo &= ~BRLID_BRALID_OPCODE_MASK;
-+    	instr_lo |= BRALID_OPCODE;
-+    }
++    if ((instr_lo & BRLID_BRALID_OPCODE_MASK) == BRLID_OPCODE)
++      {
++        instr_lo &= ~BRLID_BRALID_OPCODE_MASK;
++        instr_lo |= BRALID_OPCODE;
++      }
 +
 +    bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
 +}
 +
 +/*
-+ * This code is to revert base register of instruction back to R0 instead of R20
-+ * in case of absolute address coming from external elf and -mpic-data-text-rel option was invoked in compilation
-+ */
++This code is to revert base register of instruction
++back to R0 instead of R20 in case of absolute address coming from external elf
++and -mpic-data-text-rel option was invoked in compilation
++*/
 +
 +static void
 +microblaze_bfd_revert_base_reg_value_64 (bfd *abfd, bfd_byte *bfd_addr)
@@ -127,17 +129,18 @@ index a7e5476651..33d49ff3a3 100644
 +
 +    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
 +    base_reg = ((instr_lo & RA_MASK) >> 16);
-+    if(base_reg == R20){
-+    	instr_lo &= ~RA_MASK;
-+    	instr_lo |= R0;
-+    	bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
-+    }
-+  }
++    if (base_reg == R20)
++      {
++        instr_lo &= ~RA_MASK;
++        instr_lo |= R0;
++        bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
++      }
++}
 +
  /* This code is taken from elf32-m32r.c
     There is some attempt to make this function usable for many architectures,
     both USE_REL and USE_RELA ['twould be nice if such a critter existed],
-@@ -1008,12 +1094,23 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1008,11 +1097,32 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	      bfd_boolean warned ATTRIBUTE_UNUSED;
  	      bfd_boolean ignored ATTRIBUTE_UNUSED;
  
@@ -146,28 +149,36 @@ index a7e5476651..33d49ff3a3 100644
 -				       h, sec, relocation,
 -				       unresolved_reloc, warned, ignored);
 -	      sym_name = h->root.root.string;
--	    }
 +		  RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
 +				  r_symndx, symtab_hdr, sym_hashes,
 +				  h, sec, relocation,
 +				  unresolved_reloc, warned, ignored);
 +		  sym_name = h->root.root.string;
 +
-+		  if(info->adjust_insn_abs_refs && h->root.u.def.section->sec_info_type == SEC_INFO_TYPE_JUST_SYMS){ //symbol from external file
-+			  if((int)r_type == R_MICROBLAZE_64_PCREL){ //Fix relative branches to be absolute
-+				  r_type = R_MICROBLAZE_64;
-+				  microblaze_bfd_write_branch_absolute_value_64(input_bfd, contents + offset);
-+			  }
-+			  else if((int) r_type == R_MICROBLAZE_TEXTREL_64){ // Fix base register to be r0 instead of r20
-+				  r_type = R_MICROBLAZE_64;
-+				  microblaze_bfd_revert_base_reg_value_64(input_bfd, contents + offset);
-+			  }
++		  if(info->adjust_insn_abs_refs
++		     && h->root.u.def.section->sec_info_type
++		     == SEC_INFO_TYPE_JUST_SYMS)
++		  {
++		    //symbol from external file
++			if ((int)r_type == R_MICROBLAZE_64_PCREL)
++			{
++			  //Fix relative branches to be absolute
++			  r_type = R_MICROBLAZE_64;
++			  microblaze_bfd_write_branch_absolute_value_64 (
++					  input_bfd, contents + offset);
++			}
++			else if ((int) r_type == R_MICROBLAZE_TEXTREL_64)
++			{
++			  // Fix base register to be r0 instead of r20
++			  r_type = R_MICROBLAZE_64;
++			  microblaze_bfd_revert_base_reg_value_64 (
++					  input_bfd, contents + offset);
++			}
 +		  }
-+	  }
+ 	    }
  
  	  /* Sanity check the address.  */
- 	  if (offset > bfd_get_section_limit (input_bfd, input_section))
-@@ -1126,9 +1223,15 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1126,9 +1236,14 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	    case (int) R_MICROBLAZE_32_SYM_OP_SYM:
  	      break; /* Do nothing.  */
  
@@ -175,17 +186,16 @@ index a7e5476651..33d49ff3a3 100644
  	    case (int) R_MICROBLAZE_GOTPC_64:
 -	      relocation = (htab->elf.sgotplt->output_section->vma
 -			    + htab->elf.sgotplt->output_offset);
-+	    if(r_type == R_MICROBLAZE_GOTPC_64){
-+	    	relocation = htab->elf.sgotplt->output_section->vma
++	    if(r_type == R_MICROBLAZE_GOTPC_64)
++	      relocation = htab->elf.sgotplt->output_section->vma
 +	    		+ htab->elf.sgotplt->output_offset;
-+	    }
-+	    else if(r_type == R_MICROBLAZE_TEXTPCREL_64) {
-+	    	relocation = input_section->output_section->vma;
-+	    }
++	    else if(r_type == R_MICROBLAZE_TEXTPCREL_64)
++	      relocation = input_section->output_section->vma;
++
  	      relocation -= (input_section->output_section->vma
  			     + input_section->output_offset
  			     + offset + INST_WORD_SIZE);
-@@ -1389,6 +1492,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1389,6 +1504,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	      bfd_put_16 (input_bfd, relocation & 0xffff,
  			  contents + offset + 2 + INST_WORD_SIZE);
  	      break;
@@ -194,31 +204,34 @@ index a7e5476651..33d49ff3a3 100644
  	    case (int) R_MICROBLAZE_64_PCREL :
  	    case (int) R_MICROBLAZE_64:
  	    case (int) R_MICROBLAZE_32:
-@@ -1407,11 +1512,20 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1407,11 +1524,22 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  			  relocation -= (input_section->output_section->vma
  					 + input_section->output_offset
  					 + offset + INST_WORD_SIZE);
-+			else if(r_type == R_MICROBLAZE_TEXTREL_64 || r_type == R_MICROBLAZE_TEXTREL_32_LO){
-+			  relocation -= input_section->output_section->vma;
-+			}
-+			if(r_type == R_MICROBLAZE_TEXTREL_32_LO) {
-+				bfd_put_16 (input_bfd, relocation & 0xffff,
-+							            contents + offset + endian);
-+			}
-+			else {
- 			bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
+-			bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
 -				    contents + offset + endian);
-+			            contents + offset + endian);
- 			bfd_put_16 (input_bfd, relocation & 0xffff,
+-			bfd_put_16 (input_bfd, relocation & 0xffff,
 -				    contents + offset + endian + INST_WORD_SIZE);
--		      }
++			else if (r_type == R_MICROBLAZE_TEXTREL_64
++					|| r_type == R_MICROBLAZE_TEXTREL_32_LO)
++			  relocation -= input_section->output_section->vma;
++
++			if (r_type == R_MICROBLAZE_TEXTREL_32_LO)
++			  bfd_put_16 (input_bfd, relocation & 0xffff,
++					      contents + offset + endian);
++
++			else
++			  {
++			    bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
++			            contents + offset + endian);
++			    bfd_put_16 (input_bfd, relocation & 0xffff,
 +			            contents + offset + endian + INST_WORD_SIZE);
-+		    	}
+ 		      }
 +		    }
  		    break;
  		  }
  
-@@ -1502,11 +1616,21 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1502,11 +1630,21 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  			  relocation -= (input_section->output_section->vma
  					 + input_section->output_offset
  					 + offset + INST_WORD_SIZE);
@@ -227,39 +240,41 @@ index a7e5476651..33d49ff3a3 100644
 -			bfd_put_16 (input_bfd, relocation & 0xffff,
 -				    contents + offset + endian + INST_WORD_SIZE);
 -		      }
-+			else if(r_type == R_MICROBLAZE_TEXTREL_64 || r_type == R_MICROBLAZE_TEXTREL_32_LO){
++			else if(r_type == R_MICROBLAZE_TEXTREL_64
++					|| r_type == R_MICROBLAZE_TEXTREL_32_LO)
 +			  relocation -= input_section->output_section->vma;
-+			}
 +
-+			if(r_type == R_MICROBLAZE_TEXTREL_32_LO) {
-+				bfd_put_16 (input_bfd, relocation & 0xffff,
-+				            contents + offset + endian);
-+			}
-+			else {
-+				bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
++			if(r_type == R_MICROBLAZE_TEXTREL_32_LO)
++			  bfd_put_16 (input_bfd, relocation & 0xffff,
++				          contents + offset + endian);
++			else
++			  {
++			   bfd_put_16 (input_bfd, (relocation >> 16) & 0xffff,
 +							contents + offset + endian);
-+				bfd_put_16 (input_bfd, relocation & 0xffff,
++			   bfd_put_16 (input_bfd, relocation & 0xffff,
 +							contents + offset + endian + INST_WORD_SIZE);
-+				}
++			  }
 +		    }
  		    break;
  		  }
  	      }
-@@ -1699,7 +1823,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1699,7 +1837,8 @@ microblaze_elf_relax_section (bfd *abfd,
      {
        bfd_vma symval;
        if ((ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64_PCREL)
 -	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64 ))
-+	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64 )
-+	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_TEXTREL_64 ))
++	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64)
++	  && (ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_TEXTREL_64))
  	continue; /* Can't delete this reloc.  */
  
        /* Get the section contents.  */
-@@ -1755,6 +1880,11 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1755,6 +1894,13 @@ microblaze_elf_relax_section (bfd *abfd,
  	       regular reloc processing.  */
  	    continue;
  
-+          if(link_info->adjust_insn_abs_refs && h->root.u.def.section->sec_info_type == SEC_INFO_TYPE_JUST_SYMS)
++      if(link_info->adjust_insn_abs_refs
++         && h->root.u.def.section->sec_info_type
++         == SEC_INFO_TYPE_JUST_SYMS)
 +        	/** Just ignore symbol from external file
 +        	 */
 +        continue;
@@ -267,7 +282,7 @@ index a7e5476651..33d49ff3a3 100644
  	  symval = (h->root.u.def.value
  		    + h->root.u.def.section->output_section->vma
  		    + h->root.u.def.section->output_offset);
-@@ -1768,7 +1898,10 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1768,7 +1914,10 @@ microblaze_elf_relax_section (bfd *abfd,
  	    - (irel->r_offset
  	       + sec->output_section->vma
  	       + sec->output_offset);
@@ -279,7 +294,7 @@ index a7e5476651..33d49ff3a3 100644
        else
  	symval += irel->r_addend;
  
-@@ -1791,6 +1924,10 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1791,6 +1940,10 @@ microblaze_elf_relax_section (bfd *abfd,
  	      irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
  					   (int) R_MICROBLAZE_32_LO);
  	      break;
@@ -290,7 +305,7 @@ index a7e5476651..33d49ff3a3 100644
  	    default:
  	      /* Cannot happen.  */
  	      BFD_ASSERT (FALSE);
-@@ -1817,6 +1954,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1817,6 +1970,8 @@ microblaze_elf_relax_section (bfd *abfd,
  	      break;
  	    case R_MICROBLAZE_64_PCREL:
  	      break;
@@ -453,7 +468,7 @@ index 5d637acbab..13f24f098f 100644
    unsigned int allow_undefined_version: 1;
  
 diff --git a/include/elf/microblaze.h b/include/elf/microblaze.h
-index ae98099d55..e3b754d4e9 100644
+index ae98099d55..dbaa16cb55 100644
 --- a/include/elf/microblaze.h
 +++ b/include/elf/microblaze.h
 @@ -58,7 +58,9 @@ START_RELOC_NUMBERS (elf_microblaze_reloc_type)
@@ -461,9 +476,9 @@ index ae98099d55..e3b754d4e9 100644
    RELOC_NUMBER (R_MICROBLAZE_TLSGOTTPREL32, 28) /* TLS Offset From Thread Pointer */
    RELOC_NUMBER (R_MICROBLAZE_TLSTPREL32, 29)    /* TLS Offset From Thread Pointer */
 -   
-+  RELOC_NUMBER (R_MICROBLAZE_TEXTPCREL_64, 30)    /* PC-relative TEXT offset */
-+  RELOC_NUMBER (R_MICROBLAZE_TEXTREL_64, 31)    /* TEXT Entry offset 64-bit */
-+  RELOC_NUMBER (R_MICROBLAZE_TEXTREL_32_LO, 32)    /* TEXT Entry offset 32-bit generated by relax option only */
++  RELOC_NUMBER (R_MICROBLAZE_TEXTPCREL_64, 30)  /* PC-relative TEXT offset.  */
++  RELOC_NUMBER (R_MICROBLAZE_TEXTREL_64, 31)    /* TEXT Entry offset 64-bit.  */
++  RELOC_NUMBER (R_MICROBLAZE_TEXTREL_32_LO, 32) /* TEXT Entry offset 32-bit.  */
  END_RELOC_NUMBERS (R_MICROBLAZE_max)
  
  /* Global base address names.  */
