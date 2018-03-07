@@ -20,7 +20,7 @@ index 9742c1ac7f..11b1705397 100644
  relocation enumerators.  N.B. the order of the enumerators is
  important as several tables in the AArch64 bfd backend are indexed
 diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
-index a7e5476651..23354f2048 100644
+index a7e5476651..351b868089 100644
 --- a/bfd/elf32-microblaze.c
 +++ b/bfd/elf32-microblaze.c
 @@ -251,6 +251,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
@@ -84,16 +84,16 @@ index a7e5476651..23354f2048 100644
  	      (sreloc->contents + reloc_index * sizeof (Elf32_External_Rela)));
  }
  
-+#define BRLID_BRALID_OPCODE_MASK	0xFC1F0000
-+#define BRLID_OPCODE				0xB8140000
-+#define BRALID_OPCODE				0xB81C0000
-+#define ADDK_OPCODE					0x10000000
-+#define RD_MASK 					0x03E00000
-+#define RA_MASK 					0x001F0000
-+#define RB_MASK 					0x0000F800
-+#define NOP							0x80000000
-+#define R0							0x00
-+#define R20							0x14
++#define BRLID_BRALID_OPCODE_MASK    0xFC1F0000
++#define BRLID_OPCODE			    0xB8140000
++#define BRALID_OPCODE			    0xB81C0000
++#define ADDK_OPCODE				    0x10000000
++#define RD_MASK					    0x03E00000
++#define RA_MASK					    0x001F0000
++#define RB_MASK					    0x0000F800
++#define NOP						    0x80000000
++#define R0						    0x00
++#define R20						    0x14
 +
 +/*
 +This code is to replace relative branch instruction with absolute
