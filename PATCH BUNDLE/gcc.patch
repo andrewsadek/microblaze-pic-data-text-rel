@@ -1,6 +1,6 @@
 Index: gcc/config/microblaze/microblaze-protos.h
 ===================================================================
---- gcc/config/microblaze/microblaze-protos.h	(revision 257967)
+--- gcc/config/microblaze/microblaze-protos.h	(revision 258312)
 +++ gcc/config/microblaze/microblaze-protos.h	(working copy)
 @@ -24,6 +24,7 @@
  
@@ -12,7 +12,7 @@ Index: gcc/config/microblaze/microblaze-protos.h
  extern void microblaze_expand_epilogue (void);
 Index: gcc/config/microblaze/microblaze.c
 ===================================================================
---- gcc/config/microblaze/microblaze.c	(revision 257967)
+--- gcc/config/microblaze/microblaze.c	(revision 258312)
 +++ gcc/config/microblaze/microblaze.c	(working copy)
 @@ -91,7 +91,8 @@ enum microblaze_address_type
    ADDRESS_SYMBOLIC,
@@ -290,7 +290,7 @@ Index: gcc/config/microblaze/microblaze.c
  
 Index: gcc/config/microblaze/microblaze.h
 ===================================================================
---- gcc/config/microblaze/microblaze.h	(revision 257967)
+--- gcc/config/microblaze/microblaze.h	(revision 258312)
 +++ gcc/config/microblaze/microblaze.h	(working copy)
 @@ -518,11 +518,7 @@ typedef struct microblaze_args
  
@@ -307,7 +307,7 @@ Index: gcc/config/microblaze/microblaze.h
     addresses which require two reload registers.  */
 Index: gcc/config/microblaze/microblaze.md
 ===================================================================
---- gcc/config/microblaze/microblaze.md	(revision 257967)
+--- gcc/config/microblaze/microblaze.md	(revision 258312)
 +++ gcc/config/microblaze/microblaze.md	(working copy)
 @@ -41,6 +41,8 @@
    (UNSPEC_CMP		104)    ;; signed compare
@@ -368,7 +368,7 @@ Index: gcc/config/microblaze/microblaze.md
  (define_insn "clzsi2"
 Index: gcc/config/microblaze/microblaze.opt
 ===================================================================
---- gcc/config/microblaze/microblaze.opt	(revision 257967)
+--- gcc/config/microblaze/microblaze.opt	(revision 258312)
 +++ gcc/config/microblaze/microblaze.opt	(working copy)
 @@ -127,5 +127,9 @@ mxl-prefetch
  Target Mask(PREFETCH)
@@ -382,7 +382,7 @@ Index: gcc/config/microblaze/microblaze.opt
  Target
 Index: gcc/doc/tm.texi
 ===================================================================
---- gcc/doc/tm.texi	(revision 257967)
+--- gcc/doc/tm.texi	(revision 258312)
 +++ gcc/doc/tm.texi	(working copy)
 @@ -7491,6 +7491,14 @@ when the target cannot support (some kinds of) dyn
  in read-only sections even in executables.
@@ -401,7 +401,7 @@ Index: gcc/doc/tm.texi
  assume that @var{exp} is either a @code{VAR_DECL} node or a constant of
 Index: gcc/doc/tm.texi.in
 ===================================================================
---- gcc/doc/tm.texi.in	(revision 257967)
+--- gcc/doc/tm.texi.in	(revision 258312)
 +++ gcc/doc/tm.texi.in	(working copy)
 @@ -4922,6 +4922,8 @@ This macro is irrelevant if there is no separate r
  
@@ -414,7 +414,7 @@ Index: gcc/doc/tm.texi.in
  @defmac USE_SELECT_SECTION_FOR_FUNCTIONS
 Index: gcc/stmt.c
 ===================================================================
---- gcc/stmt.c	(revision 257967)
+--- gcc/stmt.c	(revision 258312)
 +++ gcc/stmt.c	(working copy)
 @@ -847,7 +847,8 @@ emit_case_dispatch_table (tree index_expr, tree in
    /* Output the table.  */
@@ -428,7 +428,7 @@ Index: gcc/stmt.c
  								    table_label),
 Index: gcc/target.def
 ===================================================================
---- gcc/target.def	(revision 257967)
+--- gcc/target.def	(revision 258312)
 +++ gcc/target.def	(working copy)
 @@ -507,6 +507,19 @@ in read-only sections even in executables.",
   int, (void),
@@ -452,7 +452,7 @@ Index: gcc/target.def
      set if the runtime relocations require non-local name resolution.
 Index: gcc/targhooks.c
 ===================================================================
---- gcc/targhooks.c	(revision 257967)
+--- gcc/targhooks.c	(revision 258312)
 +++ gcc/targhooks.c	(working copy)
 @@ -1196,6 +1196,15 @@ default_reloc_rw_mask (void)
    return flag_pic ? 3 : 0;
@@ -472,7 +472,7 @@ Index: gcc/targhooks.c
  					 tree id)
 Index: gcc/targhooks.h
 ===================================================================
---- gcc/targhooks.h	(revision 257967)
+--- gcc/targhooks.h	(revision 258312)
 +++ gcc/targhooks.h	(working copy)
 @@ -175,6 +175,7 @@ extern machine_mode default_secondary_memory_neede
  extern void default_target_option_override (void);
@@ -486,8 +486,10 @@ Index: gcc/testsuite/gcc.target/microblaze/others/picdtr.c
 ===================================================================
 --- gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(nonexistent)
 +++ gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(working copy)
-@@ -0,0 +1,80 @@
+@@ -0,0 +1,67 @@
 +/* { dg-options "-fPIE -mpic-data-text-rel" } */
++
++/* { dg-do "run" } */
 +
 +
 +#define TEST_VAR(var,val) (var) = (val); if( (var) != (val)) return 0;
@@ -502,21 +504,6 @@ Index: gcc/testsuite/gcc.target/microblaze/others/picdtr.c
 +typedef struct {int a; short b; long c[1000][1000]; long long d[3][3]; char e; } myDef;
 +myDef def;
 +const char* myString;
-+
-+/* { dg-final { scan-assembler "mfs\tr20,rpc" } } */
-+/* { dg-final { scan-assembler "addik\tr20,r20,8@TXTPCREL" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*L\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*L" } } */
-+
-+
 +
 +void foo2() {
 +	var++;
