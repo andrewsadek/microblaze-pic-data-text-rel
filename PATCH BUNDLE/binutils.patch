@@ -537,12 +537,12 @@ index f2191602d4..ff83ad9672 100644
      '\0', N_("[=STYLE]"), N_("Demangle symbol names [using STYLE]"),
      TWO_DASHES },
 +  { {"adjust-insn-abs-refs", no_argument, NULL, OPTION_ADJUST_INSN_ABS_REFS},
-+    '\0', NULL, N_("Adjust instruction when relocation contains a symbol\n",
++    '\0', NULL, N_("Adjust instruction when relocation contains a symbol\n"
 +		   "           from filename invoked by -R or --just-symbols"),
 +    TWO_DASHES},
 +  { {"disable-multiple-abs-defs", no_argument, NULL,
 +     OPTION_DISABLE_MULTIPLE_DEFS_ABS},
-+    '\0', NULL, N_("Do not allow multiple definitions with symbols included\n",
++    '\0', NULL, N_("Do not allow multiple definitions with symbols included\n"
 +		   "           in filename invoked by -R or --just-symbols"),
 +    TWO_DASHES},
    { {"embedded-relocs", no_argument, NULL, OPTION_EMBEDDED_RELOCS},
