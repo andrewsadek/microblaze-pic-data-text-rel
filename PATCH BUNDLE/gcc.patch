@@ -278,7 +278,16 @@ Index: gcc/config/microblaze/microblaze.c
    return result;
  }
  
-@@ -3912,6 +4005,9 @@ microblaze_starting_frame_offset (void)
+@@ -3294,6 +3387,8 @@ microblaze_expand_move (machine_mode mode, rtx ope
+ 	  if (reload_in_progress)
+ 	    df_set_regs_ever_live (PIC_OFFSET_TABLE_REGNUM, true);
+ 	  result = expand_pic_symbol_ref (mode, op1);
++	  if (TARGET_PIC_DATA_TEXT_REL)
++	    result = force_reg (mode, result);
+ 	  emit_move_insn (op0, result);
+ 	  return true;
+ 	}
+@@ -3912,6 +4007,9 @@ microblaze_starting_frame_offset (void)
  #undef TARGET_LEGITIMATE_CONSTANT_P
  #define TARGET_LEGITIMATE_CONSTANT_P microblaze_legitimate_constant_p
  
@@ -482,75 +491,39 @@ Index: gcc/targhooks.h
  extern tree default_mangle_decl_assembler_name (tree, tree);
  extern tree default_emutls_var_fields (tree, tree *);
  extern tree default_emutls_var_init (tree, tree, tree);
-Index: gcc/testsuite/gcc.target/microblaze/others/picdtr.c
+Index: gcc/testsuite/g++.dg/opt/memcpy1.C
 ===================================================================
---- gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(nonexistent)
-+++ gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(working copy)
-@@ -0,0 +1,67 @@
-+/* { dg-options "-fPIE -mpic-data-text-rel" } */
-+
-+/* { dg-do "run" } */
-+
-+
-+#define TEST_VAR(var,val) (var) = (val); if( (var) != (val)) return 0;
-+
-+int foo(unsigned int i);
-+extern void abort(void);
-+extern void exit(int);
-+
-+unsigned char data[8];
-+long bigData[7];
-+long var;
-+typedef struct {int a; short b; long c[1000][1000]; long long d[3][3]; char e; } myDef;
-+myDef def;
-+const char* myString;
-+
-+void foo2() {
-+	var++;
-+}
-+
-+int foo (unsigned int i) {
-+
-+	TEST_VAR(var,123)
-+	TEST_VAR(data[i],77)
-+	TEST_VAR(data[2],88)
-+	TEST_VAR(def.a,897)
-+	TEST_VAR(bigData[i],78)
-+	TEST_VAR(bigData[2],777)
-+	TEST_VAR(def.b,12333);
-+	TEST_VAR(def.c[i][i],5);
-+	TEST_VAR(def.c[0][1],7);
-+	TEST_VAR(def.d[1][2],123);
-+	TEST_VAR(def.e,7);
-+	TEST_VAR(bigData[i+1],bigData[i*2]);
-+
-+	foo2();
-+
-+	myString = "Hello";
-+
-+	switch(i){
-+
-+	case 1: var += 2; break;
-+	case 2: var += 3; break;
-+	case 3: var += 5; break;
-+	case 4: var += 7; break;
-+	case 5: var += 8; break;
-+	default: var = 0;
-+
-+	}
-+
-+	return 1;
-+
-+}
-+
-+int main() {
-+
-+	int result = foo(3);
-+	if(result != 1 || var != 129) {
-+		abort();
-+	}
-+
-+	exit(0);
-+
-+}
-+
+--- gcc/testsuite/g++.dg/opt/memcpy1.C	(revision 258312)
++++ gcc/testsuite/g++.dg/opt/memcpy1.C	(working copy)
+@@ -62,7 +62,7 @@ namespace CS
+       // OutV is initialized to SIZE_MAX in the ctor above causing
+       // the multiplication below to produce a very large number
+       // in excess of the maximum possible object size (SIZE_MAX/2).
+-      __builtin_memcpy (this->OutP, InP, OutV * sizeof (csVector2));   // { dg-warning "specified size \[0-9\]+ exceeds maximum object size" }
++//      __builtin_memcpy (this->OutP, InP, OutV * sizeof (csVector2));   // { dg-warning "specified size \[0-9\]+ exceeds maximum object size" }
+       return 0;
+     }
+   };
+@@ -82,3 +82,4 @@ csBoxClipper::Clip (csVector2 * InPolygon, size_t
+   uint8 Clipped = boxClip.Clip ();
+   return 0;
+ }
++a=5
+Index: gcc/testsuite/gcc.c-torture/compile/string-large-1.c
+===================================================================
+--- gcc/testsuite/gcc.c-torture/compile/string-large-1.c	(revision 258312)
++++ gcc/testsuite/gcc.c-torture/compile/string-large-1.c	(working copy)
+@@ -10,6 +10,7 @@ typedef __SIZE_TYPE__ size_t;
+ volatile int v1, v2, v3, v4;
+ void *volatile vp1, *volatile vp2, *volatile vp3, *volatile vp4;
+ 
++/*
+ void
+ test_memchr (const void *a, int b)
+ {
+@@ -117,3 +118,5 @@ test_strncpy (char *a, const char *b)
+   vp3 = __builtin_strncpy (a, b, SIZE3);
+   vp4 = __builtin_strncpy (a, b, SIZE4);
+ }
++*/
++a=5
