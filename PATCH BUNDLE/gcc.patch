@@ -261,33 +261,63 @@ Index: gcc/config/microblaze/microblaze.c
  static section *
  microblaze_select_section (tree decl, int reloc, unsigned HOST_WIDE_INT align)
  {
-@@ -3187,10 +3276,14 @@ static rtx
+@@ -3187,10 +3276,18 @@ static rtx
  expand_pic_symbol_ref (machine_mode mode ATTRIBUTE_UNUSED, rtx op)
  {
    rtx result;
 -  result = gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_GOTOFF);
++  bool isFunc = (GET_CODE (op) == SYMBOL_REF)
++		        ?TREE_CODE(SYMBOL_REF_DECL (op)) == FUNCTION_DECL : false;
 +  result = (!TARGET_PIC_DATA_TEXT_REL)
 +		  ? gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_GOTOFF):
 +		   gen_rtx_UNSPEC (Pmode, gen_rtvec (1, op), UNSPEC_TEXT);
    result = gen_rtx_CONST (Pmode, result);
-   result = gen_rtx_PLUS (Pmode, pic_offset_table_rtx, result);
+-  result = gen_rtx_PLUS (Pmode, pic_offset_table_rtx, result);
 -  result = gen_const_mem (Pmode, result);
++  result = (TARGET_PIC_DATA_TEXT_REL && isFunc)
++		  ? gen_rtx_PLUS (Pmode, gen_raw_REG (Pmode, get_base_reg(op)), result):
++			gen_rtx_PLUS (Pmode, pic_offset_table_rtx, result);
 +  result = (!TARGET_PIC_DATA_TEXT_REL)
 +		  ? gen_const_mem (Pmode, result) : result;
 +
    return result;
  }
  
-@@ -3294,6 +3387,8 @@ microblaze_expand_move (machine_mode mode, rtx ope
+@@ -3294,10 +3391,33 @@ microblaze_expand_move (machine_mode mode, rtx ope
  	  if (reload_in_progress)
  	    df_set_regs_ever_live (PIC_OFFSET_TABLE_REGNUM, true);
  	  result = expand_pic_symbol_ref (mode, op1);
-+	  if (TARGET_PIC_DATA_TEXT_REL)
++	  if (TARGET_PIC_DATA_TEXT_REL) {
 +	    result = force_reg (mode, result);
++	  }
  	  emit_move_insn (op0, result);
  	  return true;
  	}
-@@ -3912,6 +4007,9 @@ microblaze_starting_frame_offset (void)
+     }
++  if (GET_CODE (op1) == PLUS && GET_CODE (XEXP (op1,1)) == CONST){
++        rtx p0, p1, result, temp;
++
++        p1 = XEXP (op1,1);
++        p0 = XEXP (p1, 0);
++        if(GET_CODE (p0) == PLUS)
++          {
++        	p1 = XEXP (p0, 1);
++        	p0 = XEXP (p0, 0);
++          }
++        if(GET_CODE (p0) == UNSPEC && GET_CODE (p1) == CONST_INT
++        	&& flag_pic && TARGET_PIC_DATA_TEXT_REL){
++        	result = gen_rtx_CONST (Pmode, p0);
++        	result = gen_rtx_PLUS (Pmode, pic_offset_table_rtx, result);
++        	temp = force_reg (mode, result);
++        	emit_move_insn (op0, gen_rtx_PLUS (SImode, temp, p1));
++        	return true;
++        }
++
++    }
+   /* Handle Case of (const (plus symbol const_int)).  */
+   if (GET_CODE (op1) == CONST && GET_CODE (XEXP (op1,0)) == PLUS)
+     {
+@@ -3912,6 +4032,9 @@ microblaze_starting_frame_offset (void)
  #undef TARGET_LEGITIMATE_CONSTANT_P
  #define TARGET_LEGITIMATE_CONSTANT_P microblaze_legitimate_constant_p
  
