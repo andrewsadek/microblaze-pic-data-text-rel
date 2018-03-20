@@ -1,5 +1,5 @@
 diff --git a/bfd/bfd-in2.h b/bfd/bfd-in2.h
-index 9742c1a..11b1705 100644
+index 9742c1ac7f..11b1705397 100644
 --- a/bfd/bfd-in2.h
 +++ b/bfd/bfd-in2.h
 @@ -5904,6 +5904,16 @@ to two words (uses imm instruction).  */
@@ -20,7 +20,7 @@ index 9742c1a..11b1705 100644
  relocation enumerators.  N.B. the order of the enumerators is
  important as several tables in the AArch64 bfd backend are indexed
 diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
-index 3acf93a..38d8e67 100644
+index a7e5476651..77e24d7f93 100644
 --- a/bfd/elf32-microblaze.c
 +++ b/bfd/elf32-microblaze.c
 @@ -251,6 +251,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
@@ -80,7 +80,7 @@ index 3acf93a..38d8e67 100644
      case BFD_RELOC_MICROBLAZE_64_PLT:
        microblaze_reloc = R_MICROBLAZE_PLT_64;
        break;
-@@ -840,6 +876,59 @@ microblaze_elf_output_dynamic_relocation (bfd *output_bfd,
+@@ -839,6 +875,59 @@ microblaze_elf_output_dynamic_relocation (bfd *output_bfd,
  	      (sreloc->contents + reloc_index * sizeof (Elf32_External_Rela)));
  }
  
@@ -140,7 +140,7 @@ index 3acf93a..38d8e67 100644
  /* This code is taken from elf32-m32r.c
     There is some attempt to make this function usable for many architectures,
     both USE_REL and USE_RELA ['twould be nice if such a critter existed],
-@@ -1009,11 +1098,32 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1008,11 +1097,32 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	      bfd_boolean warned ATTRIBUTE_UNUSED;
  	      bfd_boolean ignored ATTRIBUTE_UNUSED;
  
@@ -178,7 +178,7 @@ index 3acf93a..38d8e67 100644
  	    }
  
  	  /* Sanity check the address.  */
-@@ -1127,9 +1237,14 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1126,9 +1236,14 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	    case (int) R_MICROBLAZE_32_SYM_OP_SYM:
  	      break; /* Do nothing.  */
  
@@ -195,7 +195,7 @@ index 3acf93a..38d8e67 100644
  	      relocation -= (input_section->output_section->vma
  			     + input_section->output_offset
  			     + offset + INST_WORD_SIZE);
-@@ -1390,6 +1505,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1389,6 +1504,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	      bfd_put_16 (input_bfd, relocation & 0xffff,
  			  contents + offset + 2 + INST_WORD_SIZE);
  	      break;
@@ -204,7 +204,7 @@ index 3acf93a..38d8e67 100644
  	    case (int) R_MICROBLAZE_64_PCREL :
  	    case (int) R_MICROBLAZE_64:
  	    case (int) R_MICROBLAZE_32:
-@@ -1408,11 +1525,22 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1407,11 +1524,22 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  			  relocation -= (input_section->output_section->vma
  					 + input_section->output_offset
  					 + offset + INST_WORD_SIZE);
@@ -229,7 +229,7 @@ index 3acf93a..38d8e67 100644
  		    break;
  		  }
  
-@@ -1503,11 +1631,25 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1502,11 +1630,25 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  			  relocation -= (input_section->output_section->vma
  					 + input_section->output_offset
  					 + offset + INST_WORD_SIZE);
@@ -260,7 +260,7 @@ index 3acf93a..38d8e67 100644
  		    break;
  		  }
  	      }
-@@ -1700,7 +1842,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1699,7 +1841,8 @@ microblaze_elf_relax_section (bfd *abfd,
      {
        bfd_vma symval;
        if ((ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64_PCREL)
@@ -270,7 +270,7 @@ index 3acf93a..38d8e67 100644
  	continue; /* Can't delete this reloc.  */
  
        /* Get the section contents.  */
-@@ -1756,6 +1899,12 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1755,6 +1898,12 @@ microblaze_elf_relax_section (bfd *abfd,
  	       regular reloc processing.  */
  	    continue;
  
@@ -283,7 +283,7 @@ index 3acf93a..38d8e67 100644
  	  symval = (h->root.u.def.value
  		    + h->root.u.def.section->output_section->vma
  		    + h->root.u.def.section->output_offset);
-@@ -1769,7 +1918,11 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1768,7 +1917,11 @@ microblaze_elf_relax_section (bfd *abfd,
  	    - (irel->r_offset
  	       + sec->output_section->vma
  	       + sec->output_offset);
@@ -296,7 +296,7 @@ index 3acf93a..38d8e67 100644
        else
  	symval += irel->r_addend;
  
-@@ -1792,6 +1945,10 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1791,6 +1944,10 @@ microblaze_elf_relax_section (bfd *abfd,
  	      irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
  					   (int) R_MICROBLAZE_32_LO);
  	      break;
@@ -307,7 +307,7 @@ index 3acf93a..38d8e67 100644
  	    default:
  	      /* Cannot happen.  */
  	      BFD_ASSERT (FALSE);
-@@ -1818,6 +1975,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1817,6 +1974,8 @@ microblaze_elf_relax_section (bfd *abfd,
  	      break;
  	    case R_MICROBLAZE_64_PCREL:
  	      break;
@@ -316,28 +316,31 @@ index 3acf93a..38d8e67 100644
  	    case R_MICROBLAZE_64:
  	    case R_MICROBLAZE_32_LO:
  	      /* If this reloc is against a symbol defined in this
-@@ -1954,7 +2113,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1953,7 +2112,10 @@ microblaze_elf_relax_section (bfd *abfd,
  		    }
  		}
  	      else if ((ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_32_PCREL_LO)
 -		       || (ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_32_LO))
-+		       || (ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_32_LO)
-+			   || (ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_TEXTREL_32_LO))
++		       || (ELF32_R_TYPE (irelscan->r_info)
++				   == (int) R_MICROBLAZE_32_LO)
++			   || (ELF32_R_TYPE (irelscan->r_info)
++				   == (int) R_MICROBLAZE_TEXTREL_32_LO))
  		{
  		  isym = isymbuf + ELF32_R_SYM (irelscan->r_info);
  
-@@ -1998,7 +2158,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1997,7 +2159,9 @@ microblaze_elf_relax_section (bfd *abfd,
  		    }
  		}
  
 -	      if (ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_64)
 +	      if (ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_64
-+	    	|| (ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_TEXTREL_64))
++		      || (ELF32_R_TYPE (irelscan->r_info)
++			      == (int) R_MICROBLAZE_TEXTREL_64))
  		{
  		  isym = isymbuf + ELF32_R_SYM (irelscan->r_info);
  
 diff --git a/bfd/libbfd.h b/bfd/libbfd.h
-index 0fba5be..1d2007f 100644
+index 0fba5bea3e..1d2007f519 100644
 --- a/bfd/libbfd.h
 +++ b/bfd/libbfd.h
 @@ -2857,6 +2857,8 @@ static const char *const bfd_reloc_code_real_names[] = { "@@uninitialized@@",
@@ -350,7 +353,7 @@ index 0fba5be..1d2007f 100644
    "BFD_RELOC_AARCH64_NULL",
    "BFD_RELOC_AARCH64_NONE",
 diff --git a/gas/config/tc-microblaze.c b/gas/config/tc-microblaze.c
-index 0194cd9..56f0d0a 100644
+index 0194cd9255..56f0d0ae2a 100644
 --- a/gas/config/tc-microblaze.c
 +++ b/gas/config/tc-microblaze.c
 @@ -87,6 +87,8 @@ const char FLT_CHARS[] = "rRsSfFdDxXpP";
@@ -474,7 +477,7 @@ index 0194cd9..56f0d0a 100644
        break;
  
 diff --git a/include/bfdlink.h b/include/bfdlink.h
-index 5d637ac..06e491e 100644
+index 5d637acbab..06e491e16b 100644
 --- a/include/bfdlink.h
 +++ b/include/bfdlink.h
 @@ -439,6 +439,12 @@ struct bfd_link_info
@@ -491,7 +494,7 @@ index 5d637ac..06e491e 100644
    unsigned int allow_undefined_version: 1;
  
 diff --git a/include/elf/microblaze.h b/include/elf/microblaze.h
-index ae98099..dbaa16c 100644
+index ae98099d55..dbaa16cb55 100644
 --- a/include/elf/microblaze.h
 +++ b/include/elf/microblaze.h
 @@ -58,7 +58,9 @@ START_RELOC_NUMBERS (elf_microblaze_reloc_type)
@@ -506,7 +509,7 @@ index ae98099..dbaa16c 100644
  
  /* Global base address names.  */
 diff --git a/ld/ldlex.h b/ld/ldlex.h
-index 1ecb152..4f5fe3a 100644
+index 1ecb152be1..4f5fe3a123 100644
 --- a/ld/ldlex.h
 +++ b/ld/ldlex.h
 @@ -143,6 +143,8 @@ enum option_values
@@ -519,10 +522,10 @@ index 1ecb152..4f5fe3a 100644
    OPTION_REQUIRE_DEFINED_SYMBOL,
    OPTION_ORPHAN_HANDLING,
 diff --git a/ld/ldmain.c b/ld/ldmain.c
-index 6527613..5cd5766 100644
+index 6945654c28..6c8f38dc2f 100644
 --- a/ld/ldmain.c
 +++ b/ld/ldmain.c
-@@ -280,6 +280,8 @@ main (int argc, char **argv)
+@@ -273,6 +273,8 @@ main (int argc, char **argv)
    link_info.keep_memory = TRUE;
    link_info.combreloc = TRUE;
    link_info.strip_discarded = TRUE;
@@ -531,7 +534,7 @@ index 6527613..5cd5766 100644
    link_info.emit_hash = DEFAULT_EMIT_SYSV_HASH;
    link_info.emit_gnu_hash = DEFAULT_EMIT_GNU_HASH;
    link_info.callbacks = &link_callbacks;
-@@ -970,12 +972,13 @@ multiple_definition (struct bfd_link_info *info,
+@@ -963,12 +965,13 @@ multiple_definition (struct bfd_link_info *info,
       discarded, and this is not really a multiple definition at all.
       FIXME: It would be cleaner to somehow ignore symbols defined in
       sections which are being discarded.  */
@@ -549,7 +552,7 @@ index 6527613..5cd5766 100644
  
    name = h->root.string;
 diff --git a/ld/lexsup.c b/ld/lexsup.c
-index 636ce17..2bbf0ad 100644
+index f2191602d4..5dd5123033 100644
 --- a/ld/lexsup.c
 +++ b/ld/lexsup.c
 @@ -314,6 +314,15 @@ static const struct ld_option ld_options[] =
