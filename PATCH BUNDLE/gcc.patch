@@ -567,13 +567,37 @@ Index: gcc/targhooks.h
  extern tree default_mangle_decl_assembler_name (tree, tree);
  extern tree default_emutls_var_fields (tree, tree *);
  extern tree default_emutls_var_init (tree, tree, tree);
+Index: gcc/testsuite/gcc.target/microblaze/others/data_var1.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/data_var1.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/data_var1.c	(working copy)
+@@ -3,6 +3,6 @@ int global;
+ 
+ int testfunc ()
+ {
+-/* { dg-final { scan-assembler "\lwi\tr(\[0-9]\|\[1-2]\[0-9]\|3\[0-1]),r0" } } */
++/* { dg-final { scan-assembler "\lwi\tr(\[0-9]\|\[1-2]\[0-9]\|3\[0-1]),r(0|20)" } } */
+     return global;
+ }
+Index: gcc/testsuite/gcc.target/microblaze/others/data_var2.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/data_var2.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/data_var2.c	(working copy)
+@@ -3,6 +3,6 @@ int global = 10;
+ 
+ int testfunc ()
+ {
+-/* { dg-final { scan-assembler "\lwi\tr(\[0-9]\|\[1-2]\[0-9]\|3\[0-1]),r0" } } */
++/* { dg-final { scan-assembler "\lwi\tr(\[0-9]\|\[1-2]\[0-9]\|3\[0-1]),r(0|20)" } } */
+     return global;
+ }
 Index: gcc/testsuite/gcc.target/microblaze/others/picdtr.c
 ===================================================================
 --- gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(nonexistent)
 +++ gcc/testsuite/gcc.target/microblaze/others/picdtr.c	(working copy)
 @@ -0,0 +1,80 @@
-+/* { dg-options "-fPIE -mpic-data-text-rel" } */
-+
++/* { dg-options "-fPIE -mpic-data-text-rel -save-temps" } */
++/* { dg-do run } */
 +
 +#define TEST_VAR(var,val) (var) = (val); if( (var) != (val)) return 0;
 +
@@ -592,12 +616,12 @@ Index: gcc/testsuite/gcc.target/microblaze/others/picdtr.c
 +/* { dg-final { scan-assembler "addik\tr20,r20,8@TXTPCREL" } } */
 +/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
 +/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
-+/* { dg-final { scan-assembler ",r20,\[^\n]*var\[^\n]*@TXTREL" } } */
-+/* { dg-final { scan-assembler-not ",r0,\[^\n]*var" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*bigData\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*bigData" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*def\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*def" } } */
++/* { dg-final { scan-assembler ",r20,\[^\n]*data\[^\n]*@TXTREL" } } */
++/* { dg-final { scan-assembler-not ",r0,\[^\n]*data" } } */
 +/* { dg-final { scan-assembler ",r20,\[^\n]*L\[^\n]*@TXTREL" } } */
 +/* { dg-final { scan-assembler-not ",r0,\[^\n]*L" } } */
 +
@@ -652,3 +676,84 @@ Index: gcc/testsuite/gcc.target/microblaze/others/picdtr.c
 +
 +}
 +
+Index: gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/sdata_var1.c	(working copy)
+@@ -1,4 +1,4 @@
+-/* { dg-options "-mxl-gp-opt" } */
++/* { dg-options "-mxl-gp-opt -fno-pic" } */
+ 
+ /* { dg-final { scan-assembler "\.sbss\[^2]+" } } */
+ typedef int Boolean;
+Index: gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/sdata_var2.c	(working copy)
+@@ -1,4 +1,4 @@
+-/* { dg-options "-mxl-gp-opt" } */
++/* { dg-options "-mxl-gp-opt -fno-pic" } */
+ 
+ /* { dg-final { scan-assembler "\.sdata\[^2]+" } } */
+ int global = 10;
+Index: gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/sdata_var3.c	(working copy)
+@@ -1,4 +1,4 @@
+-/* { dg-options "-mxl-gp-opt" } */
++/* { dg-options "-mxl-gp-opt -fno-pic" } */
+ 
+ extern int a;
+ 
+Index: gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/sdata_var4.c	(working copy)
+@@ -1,4 +1,4 @@
+-/* { dg-options "-mxl-gp-opt -G 16" } */
++/* { dg-options "-mxl-gp-opt -G 16 -fno-pic" } */
+ 
+ /* { dg-final { scan-assembler "\.sbss\[^2]+" } } */
+ struct test_s {
+Index: gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/sdata_var5.c	(working copy)
+@@ -1,4 +1,4 @@
+-/* { dg-options "-mxl-gp-opt -G 16" } */
++/* { dg-options "-mxl-gp-opt -G 16 -fno-pic" } */
+ 
+ /* { dg-final { scan-assembler "\.sdata\[^2]+" } } */
+ struct test_s {
+Index: gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/sdata_var6.c	(working copy)
+@@ -1,5 +1,4 @@
+-/* { dg-options "-mxl-gp-opt -G 16" } */
+-
++/* { dg-options "-mxl-gp-opt -G 16 -fno-pic" } */
+ struct test_s {
+     int a;
+     int b;
+Index: gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/string_cst1_gpopt.c	(working copy)
+@@ -1,4 +1,4 @@
+-/* { dg-options "-mxl-gp-opt" } */
++/* { dg-options "-mxl-gp-opt -fno-pic" } */
+ 
+ #include <string.h>
+ 
+Index: gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c
+===================================================================
+--- gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c	(revision 258413)
++++ gcc/testsuite/gcc.target/microblaze/others/string_cst2_gpopt.c	(working copy)
+@@ -1,4 +1,4 @@
+-/* { dg-options "-mxl-gp-opt" } */
++/* { dg-options "-mxl-gp-opt -fno-pic" } */
+ 
+ #include <string.h>
+ 

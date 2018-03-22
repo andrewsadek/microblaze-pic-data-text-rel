@@ -32,6 +32,7 @@
 	* gcc/target.def (TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC): add target hook definition.
 	* gcc/targhooks.h, gcc/targhooks.c (TARGET_ASM_GENERATE_PIC_ADDR_DIFF_VEC): 
 	add default function for generate_pic_addr_diff_vec -> flag_pic.
+	* gcc/doc/invoke.texi (Add new pic option): Add new microblaze pic option for data text relative. 
 	
 	
 	 
