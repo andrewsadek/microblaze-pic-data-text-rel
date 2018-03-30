@@ -20,7 +20,7 @@ index 9742c1a..11b1705 100644
  relocation enumerators.  N.B. the order of the enumerators is
  important as several tables in the AArch64 bfd backend are indexed
 diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
-index 3acf93a..1d231c3 100644
+index 3acf93a..f6bd634 100644
 --- a/bfd/elf32-microblaze.c
 +++ b/bfd/elf32-microblaze.c
 @@ -251,6 +251,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
@@ -178,14 +178,12 @@ index 3acf93a..1d231c3 100644
  	    }
  
  	  /* Sanity check the address.  */
-@@ -1128,8 +1238,20 @@ microblaze_elf_relocate_section (bfd *output_bfd,
- 	      break; /* Do nothing.  */
+@@ -1140,6 +1250,18 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 			  contents + offset + endian + INST_WORD_SIZE);
+ 	      break;
  
- 	    case (int) R_MICROBLAZE_GOTPC_64:
--	      relocation = (htab->elf.sgotplt->output_section->vma
--			    + htab->elf.sgotplt->output_offset);
-+	      relocation = htab->elf.sgotplt->output_section->vma
-+			  + htab->elf.sgotplt->output_offset;
++	    case (int) R_MICROBLAZE_TEXTPCREL_64:
++	      relocation = input_section->output_section->vma;
 +	      relocation -= (input_section->output_section->vma
 +			     + input_section->output_offset
 +			     + offset + INST_WORD_SIZE);
@@ -196,11 +194,9 @@ index 3acf93a..1d231c3 100644
 +			  contents + offset + endian + INST_WORD_SIZE);
 +	      break;
 +
-+	    case (int) R_MICROBLAZE_TEXTPCREL_64:
-+	      relocation = input_section->output_section->vma;
- 	      relocation -= (input_section->output_section->vma
- 			     + input_section->output_offset
- 			     + offset + INST_WORD_SIZE);
+ 	    case (int) R_MICROBLAZE_PLT_64:
+ 	      {
+ 		bfd_vma immediate;
 @@ -1390,6 +1512,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	      bfd_put_16 (input_bfd, relocation & 0xffff,
  			  contents + offset + 2 + INST_WORD_SIZE);
@@ -251,7 +247,7 @@ index 3acf93a..1d231c3 100644
 +			if (r_type == R_MICROBLAZE_TEXTREL_32_LO)
 +			  {
 +				bfd_put_16 (input_bfd, relocation & 0xffff,
-+			  				contents + offset
++							contents + offset
 +							+ endian);
 +			  }
 +			else
@@ -547,7 +543,7 @@ index ae98099..dbaa16c 100644
  
  /* Global base address names.  */
 diff --git a/ld/ld.texinfo b/ld/ld.texinfo
-index 226e2de..6b0efad 100644
+index 226e2de..5fbc317 100644
 --- a/ld/ld.texinfo
 +++ b/ld/ld.texinfo
 @@ -1582,6 +1582,17 @@ that the relocs are stored in a target specific section.  This option
@@ -557,7 +553,7 @@ index 226e2de..6b0efad 100644
 +@kindex --adjust-insn-abs-refs
 +@item --adjust-insn-abs-refs
 +This option is used to adjust instruction to absolute addressing
-+when relocation refers to a symbol from filename invoked by -R 
++when relocation refers to a symbol from filename invoked by -R
 +or --just-symbols
 +
 +@kindex --disable-multiple-abs-defs
