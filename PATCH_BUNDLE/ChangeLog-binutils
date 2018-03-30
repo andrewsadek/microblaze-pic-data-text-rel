@@ -2,8 +2,10 @@
 
 	Microblaze Target: PIC data text relative
 	* include/elf/microblaze.h (Add 3 new relocations): 'R_MICROBLAZE_TEXTPCREL_64', 'R_MICROBLAZE_TEXTREL_64' 
-	and 'R_MICROBLAZE_TEXTREL_32_LO' for relax function.		
-	* bfd/bfd-in2.h, bfd/libbfd.h (2 new BFD relocations): 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL' + 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL'
+	and 'R_MICROBLAZE_TEXTREL_32_LO' for relax function.
+	* bfd/reloc.c (2 new BFD relocations): 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL' + 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL'		
+	* bfd/bfd-in2.h: Regenerate 
+	* bfd/libbfd.h: Regenerate
 	* bfd/elf32-microblaze.c (Handle new relocs): define 'HOWTO' of 3 new relocs and handle them in both relocate 
 	and relax functions.
 	(microblaze_elf_reloc_type_lookup): add mapping between for new bfd relocs.
