@@ -9,8 +9,6 @@
 	* bfd/elf32-microblaze.c (Handle new relocs): define 'HOWTO' of 3 new relocs and handle them in both relocate 
 	and relax functions.
 	(microblaze_elf_reloc_type_lookup): add mapping between for new bfd relocs.
-	(microblaze_bfd_write_branch_absolute_value_64): replace relative branch with absolute in case 'adjust_insn_abs_refs' is true
-	(microblaze_bfd_revert_base_reg_value_64): revert base register from r20 to r0 in case 'adjust_insn_abs_refs' is true
 	(microblaze_elf_relocate_section): Handle new relocs in case of elf relocation.
 	(microblaze_elf_relax_section): Handle new relocs for elf relaxation.
 	* gas/config/tc-microblaze.c (Handle new relocs directives in assembler): Handle new relocs from compiler output.
@@ -19,11 +17,10 @@
 	(md_apply_fix): apply fix for 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL' , 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL'
 	(md_estimate_size_before_relax): estimate size for 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL' , 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL'
 	(tc_gen_reloc): generate relocations for 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL' , 'BFD_RELOC_MICROBLAZE_64_TEXTPCREL'
-	Add new linker options for static linking: adjust-insn-abs-refs, disable-multiple-abs-defs
+	Add new linker option: disable-multiple-abs-defs
 	* ld/lexsup.c (Add 2 ld options): 
-	(ld_options): add adjust-insn-abs-refs, disable-multiple-abs-defs @ 'ld_options' array
-	(parse_args): parse options and pass flags to 'link_info' struct.
-	* ld/ldlex.h (Add 2 enums): add new enums @ 'option_values' enum.
-	* include/bfdlink.h (Add 2 flags): Add new flags @ 'bfd_link_info' struct.
-	* ld/main.c: Initialize flags with false @ 'main'. Handle disable-multiple-abs-defs 
-	@ 'mutiple_definition'.	 
+	(ld_options): add disable-multiple-abs-defs @ 'ld_options' array
+	(parse_args): parse new option and pass flag to 'link_info' struct.
+	* ld/ldlex.h (Add enum): add new enum @ 'option_values' enum.
+	* include/bfdlink.h (Add flag): Add new flag @ 'bfd_link_info' struct.
+	* ld/main.c: Initialize flags with false @ 'main'. Handle disable-multiple-abs-defs @ 'mutiple_definition'.	 

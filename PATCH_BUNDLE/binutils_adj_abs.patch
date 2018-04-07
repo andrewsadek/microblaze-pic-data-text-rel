@@ -20,7 +20,7 @@ index 9742c1a..11b1705 100644
  relocation enumerators.  N.B. the order of the enumerators is
  important as several tables in the AArch64 bfd backend are indexed
 diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
-index 3acf93a..99cc3c2 100644
+index 3acf93a..f6bd634 100644
 --- a/bfd/elf32-microblaze.c
 +++ b/bfd/elf32-microblaze.c
 @@ -251,6 +251,21 @@ static reloc_howto_type microblaze_elf_howto_raw[] =
@@ -80,7 +80,105 @@ index 3acf93a..99cc3c2 100644
      case BFD_RELOC_MICROBLAZE_64_PLT:
        microblaze_reloc = R_MICROBLAZE_PLT_64;
        break;
-@@ -1140,6 +1176,18 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -840,6 +876,59 @@ microblaze_elf_output_dynamic_relocation (bfd *output_bfd,
+ 	      (sreloc->contents + reloc_index * sizeof (Elf32_External_Rela)));
+ }
+ 
++#define BRLID_BRALID_OPCODE_MASK    0xFC1F0000
++#define BRLID_OPCODE                0xB8140000
++#define BRALID_OPCODE               0xB81C0000
++#define ADDK_OPCODE                 0x10000000
++#define RD_MASK                     0x03E00000
++#define RA_MASK                     0x001F0000
++#define RB_MASK                     0x0000F800
++#define NOP                         0x80000000
++#define R0                          0x00
++#define R20                         0x14
++
++/*
++This code is to replace relative branch instruction with absolute
++branch instruction in case of absolute address coming from external elf
++*/
++
++static void
++microblaze_bfd_write_branch_absolute_value_64 (bfd *abfd, bfd_byte *bfd_addr)
++{
++    unsigned long instr_lo;
++
++    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
++    if ((instr_lo & BRLID_BRALID_OPCODE_MASK) == BRLID_OPCODE)
++      {
++	    instr_lo &= ~BRLID_BRALID_OPCODE_MASK;
++	    instr_lo |= BRALID_OPCODE;
++      }
++
++    bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
++}
++
++/*
++This code is to revert base register of instruction
++back to R0 instead of R20 in case of absolute address coming from external elf
++and -mpic-data-text-rel option was invoked in compilation
++*/
++
++static void
++microblaze_bfd_revert_base_reg_value_64 (bfd *abfd, bfd_byte *bfd_addr)
++{
++    unsigned long instr_lo;
++    unsigned long base_reg;
++
++    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
++    base_reg = ((instr_lo & RA_MASK) >> 16);
++    if (base_reg == R20)
++      {
++	    instr_lo &= ~RA_MASK;
++	    instr_lo |= R0;
++	    bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
++      }
++}
++
+ /* This code is taken from elf32-m32r.c
+    There is some attempt to make this function usable for many architectures,
+    both USE_REL and USE_RELA ['twould be nice if such a critter existed],
+@@ -1009,11 +1098,32 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 	      bfd_boolean warned ATTRIBUTE_UNUSED;
+ 	      bfd_boolean ignored ATTRIBUTE_UNUSED;
+ 
+-	      RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
+-				       r_symndx, symtab_hdr, sym_hashes,
+-				       h, sec, relocation,
+-				       unresolved_reloc, warned, ignored);
+-	      sym_name = h->root.root.string;
++		  RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
++				  r_symndx, symtab_hdr, sym_hashes,
++				  h, sec, relocation,
++				  unresolved_reloc, warned, ignored);
++		  sym_name = h->root.root.string;
++
++		  if (info->adjust_insn_abs_refs
++		     && h->root.u.def.section->sec_info_type
++		     == SEC_INFO_TYPE_JUST_SYMS)
++		  {
++		    //symbol from external file
++			if ((int)r_type == R_MICROBLAZE_64_PCREL)
++			{
++			  //Fix relative branches to be absolute
++			  r_type = R_MICROBLAZE_64;
++			  microblaze_bfd_write_branch_absolute_value_64 (
++					  input_bfd, contents + offset);
++			}
++			else if ((int) r_type == R_MICROBLAZE_TEXTREL_64)
++			{
++			  // Fix base register to be r0 instead of r20
++			  r_type = R_MICROBLAZE_64;
++			  microblaze_bfd_revert_base_reg_value_64 (
++					  input_bfd, contents + offset);
++			}
++		  }
+ 	    }
+ 
+ 	  /* Sanity check the address.  */
+@@ -1140,6 +1250,18 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  			  contents + offset + endian + INST_WORD_SIZE);
  	      break;
  
@@ -99,7 +197,7 @@ index 3acf93a..99cc3c2 100644
  	    case (int) R_MICROBLAZE_PLT_64:
  	      {
  		bfd_vma immediate;
-@@ -1390,6 +1438,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1390,6 +1512,8 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  	      bfd_put_16 (input_bfd, relocation & 0xffff,
  			  contents + offset + 2 + INST_WORD_SIZE);
  	      break;
@@ -108,7 +206,7 @@ index 3acf93a..99cc3c2 100644
  	    case (int) R_MICROBLAZE_64_PCREL :
  	    case (int) R_MICROBLAZE_64:
  	    case (int) R_MICROBLAZE_32:
-@@ -1408,11 +1458,22 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1408,11 +1532,22 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  			  relocation -= (input_section->output_section->vma
  					 + input_section->output_offset
  					 + offset + INST_WORD_SIZE);
@@ -133,7 +231,7 @@ index 3acf93a..99cc3c2 100644
  		    break;
  		  }
  
-@@ -1503,11 +1564,27 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+@@ -1503,11 +1638,27 @@ microblaze_elf_relocate_section (bfd *output_bfd,
  			  relocation -= (input_section->output_section->vma
  					 + input_section->output_offset
  					 + offset + INST_WORD_SIZE);
@@ -166,7 +264,7 @@ index 3acf93a..99cc3c2 100644
  		    break;
  		  }
  	      }
-@@ -1700,7 +1777,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1700,7 +1851,8 @@ microblaze_elf_relax_section (bfd *abfd,
      {
        bfd_vma symval;
        if ((ELF32_R_TYPE (irel->r_info) != (int) R_MICROBLAZE_64_PCREL)
@@ -176,7 +274,20 @@ index 3acf93a..99cc3c2 100644
  	continue; /* Can't delete this reloc.  */
  
        /* Get the section contents.  */
-@@ -1769,7 +1847,11 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1756,6 +1908,12 @@ microblaze_elf_relax_section (bfd *abfd,
+ 	       regular reloc processing.  */
+ 	    continue;
+ 
++      if (link_info->adjust_insn_abs_refs
++	      && h->root.u.def.section->sec_info_type
++	      == SEC_INFO_TYPE_JUST_SYMS)
++	    /* Just ignore symbol from external file.  */
++	    continue;
++
+ 	  symval = (h->root.u.def.value
+ 		    + h->root.u.def.section->output_section->vma
+ 		    + h->root.u.def.section->output_offset);
+@@ -1769,7 +1927,11 @@ microblaze_elf_relax_section (bfd *abfd,
  	    - (irel->r_offset
  	       + sec->output_section->vma
  	       + sec->output_offset);
@@ -189,7 +300,7 @@ index 3acf93a..99cc3c2 100644
        else
  	symval += irel->r_addend;
  
-@@ -1792,6 +1874,10 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1792,6 +1954,10 @@ microblaze_elf_relax_section (bfd *abfd,
  	      irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
  					   (int) R_MICROBLAZE_32_LO);
  	      break;
@@ -200,7 +311,7 @@ index 3acf93a..99cc3c2 100644
  	    default:
  	      /* Cannot happen.  */
  	      BFD_ASSERT (FALSE);
-@@ -1818,6 +1904,8 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1818,6 +1984,8 @@ microblaze_elf_relax_section (bfd *abfd,
  	      break;
  	    case R_MICROBLAZE_64_PCREL:
  	      break;
@@ -209,7 +320,7 @@ index 3acf93a..99cc3c2 100644
  	    case R_MICROBLAZE_64:
  	    case R_MICROBLAZE_32_LO:
  	      /* If this reloc is against a symbol defined in this
-@@ -1954,7 +2042,10 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1954,7 +2122,10 @@ microblaze_elf_relax_section (bfd *abfd,
  		    }
  		}
  	      else if ((ELF32_R_TYPE (irelscan->r_info) == (int) R_MICROBLAZE_32_PCREL_LO)
@@ -221,7 +332,7 @@ index 3acf93a..99cc3c2 100644
  		{
  		  isym = isymbuf + ELF32_R_SYM (irelscan->r_info);
  
-@@ -1998,7 +2089,9 @@ microblaze_elf_relax_section (bfd *abfd,
+@@ -1998,7 +2169,9 @@ microblaze_elf_relax_section (bfd *abfd,
  		    }
  		}
  
@@ -400,15 +511,18 @@ index 0194cd9..8b814a5 100644
        break;
  
 diff --git a/include/bfdlink.h b/include/bfdlink.h
-index 5d637ac..773407f 100644
+index 5d637ac..65b9c8d 100644
 --- a/include/bfdlink.h
 +++ b/include/bfdlink.h
-@@ -439,6 +439,9 @@ struct bfd_link_info
+@@ -439,6 +439,12 @@ struct bfd_link_info
    /* TRUE if ok to have multiple definition.  */
    unsigned int allow_multiple_definition: 1;
  
 +  /* TRUE if ok to have prohibit multiple definition of absolute symbols.  */
 +  unsigned int prohibit_multiple_definition_absolute: 1;
++
++  /* TRUE if ok to adapt instructions for abs references.  */
++  unsigned int adjust_insn_abs_refs: 1;
 +
    /* TRUE if ok to have version with no definition.  */
    unsigned int allow_undefined_version: 1;
@@ -429,13 +543,19 @@ index ae98099..dbaa16c 100644
  
  /* Global base address names.  */
 diff --git a/ld/ld.texinfo b/ld/ld.texinfo
-index 226e2de..ebb5627 100644
+index 226e2de..5fbc317 100644
 --- a/ld/ld.texinfo
 +++ b/ld/ld.texinfo
-@@ -1582,6 +1582,11 @@ that the relocs are stored in a target specific section.  This option
+@@ -1582,6 +1582,17 @@ that the relocs are stored in a target specific section.  This option
  is only supported by the @samp{BFIN}, @samp{CR16} and @emph{M68K}
  targets.
  
++@kindex --adjust-insn-abs-refs
++@item --adjust-insn-abs-refs
++This option is used to adjust instruction to absolute addressing
++when relocation refers to a symbol from filename invoked by -R
++or --just-symbols
++
 +@kindex --disable-multiple-abs-defs
 +@item --disable-multiple-abs-defs
 +Do not allow multiple definitions with symbols included
@@ -445,30 +565,32 @@ index 226e2de..ebb5627 100644
  @kindex --no-fatal-warnings
  @item --fatal-warnings
 diff --git a/ld/ldlex.h b/ld/ldlex.h
-index 1ecb152..04d6fd5 100644
+index 1ecb152..4f5fe3a 100644
 --- a/ld/ldlex.h
 +++ b/ld/ldlex.h
-@@ -143,6 +143,7 @@ enum option_values
+@@ -143,6 +143,8 @@ enum option_values
    OPTION_IGNORE_UNRESOLVED_SYMBOL,
    OPTION_PUSH_STATE,
    OPTION_POP_STATE,
++  OPTION_ADJUST_INSN_ABS_REFS,
 +  OPTION_DISABLE_MULTIPLE_DEFS_ABS,
    OPTION_PRINT_MEMORY_USAGE,
    OPTION_REQUIRE_DEFINED_SYMBOL,
    OPTION_ORPHAN_HANDLING,
 diff --git a/ld/ldmain.c b/ld/ldmain.c
-index 6527613..5769a33 100644
+index 6527613..22650f4 100644
 --- a/ld/ldmain.c
 +++ b/ld/ldmain.c
-@@ -280,6 +280,7 @@ main (int argc, char **argv)
+@@ -280,6 +280,8 @@ main (int argc, char **argv)
    link_info.keep_memory = TRUE;
    link_info.combreloc = TRUE;
    link_info.strip_discarded = TRUE;
 +  link_info.prohibit_multiple_definition_absolute = FALSE;
++  link_info.adjust_insn_abs_refs = FALSE;
    link_info.emit_hash = DEFAULT_EMIT_SYSV_HASH;
    link_info.emit_gnu_hash = DEFAULT_EMIT_GNU_HASH;
    link_info.callbacks = &link_callbacks;
-@@ -970,12 +971,13 @@ multiple_definition (struct bfd_link_info *info,
+@@ -970,12 +972,13 @@ multiple_definition (struct bfd_link_info *info,
       discarded, and this is not really a multiple definition at all.
       FIXME: It would be cleaner to somehow ignore symbols defined in
       sections which are being discarded.  */
@@ -488,13 +610,17 @@ index 6527613..5769a33 100644
  
    name = h->root.string;
 diff --git a/ld/lexsup.c b/ld/lexsup.c
-index 636ce17..a4bc7da 100644
+index 636ce17..c15d830 100644
 --- a/ld/lexsup.c
 +++ b/ld/lexsup.c
-@@ -314,6 +314,11 @@ static const struct ld_option ld_options[] =
+@@ -314,6 +314,15 @@ static const struct ld_option ld_options[] =
    { {"demangle", optional_argument, NULL, OPTION_DEMANGLE},
      '\0', N_("[=STYLE]"), N_("Demangle symbol names [using STYLE]"),
      TWO_DASHES },
++  { {"adjust-insn-abs-refs", no_argument, NULL, OPTION_ADJUST_INSN_ABS_REFS},
++    '\0', NULL, N_("Adjust instruction when relocation contains a symbol\n"
++		   "           from filename invoked by -R or --just-symbols"),
++    TWO_DASHES},
 +  { {"disable-multiple-abs-defs", no_argument, NULL,
 +     OPTION_DISABLE_MULTIPLE_DEFS_ABS},
 +    '\0', NULL, N_("Do not allow multiple definitions with symbols included\n"
@@ -503,10 +629,13 @@ index 636ce17..a4bc7da 100644
    { {"embedded-relocs", no_argument, NULL, OPTION_EMBEDDED_RELOCS},
      '\0', NULL, N_("Generate embedded relocs"), TWO_DASHES},
    { {"fatal-warnings", no_argument, NULL, OPTION_WARN_FATAL},
-@@ -1159,6 +1164,9 @@ parse_args (unsigned argc, char **argv)
+@@ -1159,6 +1168,12 @@ parse_args (unsigned argc, char **argv)
  	case OPTION_NO_STRIP_DISCARDED:
  	  link_info.strip_discarded = FALSE;
  	  break;
++	case OPTION_ADJUST_INSN_ABS_REFS:
++	  link_info.adjust_insn_abs_refs = TRUE;
++	  break;
 +	case OPTION_DISABLE_MULTIPLE_DEFS_ABS:
 +	  link_info.prohibit_multiple_definition_absolute = TRUE;
 +	  break;
