@@ -74,9 +74,13 @@ Summary of Added Options
 
 GCC Microblaze
 ---------------
-1) -mpic-data-text-rel: This allows referencing data by offset from the start of text instead of GOT. Shall be invoked with -fPIC/-fPIE.
+1) -mpic-data-is-text-relative: This allows referencing data by offset from the start of text instead of GOT. Shall be invoked with -fPIC/-fPIE.
 
 Linker (ld)
 ------------
-2) --adjust-insn-abs-refs: Any instruction refering to an absolute symbol reference coming from an external .elf (e.g. by invoking -R"example.elf"), will be excluded from the data-text relative approach and adjusted as follows (relative branch -> absolute ; base register r20 -> r0). [Target Dependent]
-3) --disable-multiple-abs-defs: Generate error in case of multiple symbol definition in external .elf (e.g. by invoking -R"example.elf") and the current .elf
+2) --disable-multiple-abs-defs: Generate error in case of multiple symbol definition in external .elf (e.g. by invoking -R"example.elf") and the current .elf
+
+Patch uploaded to GCC and Binutils repositories:
+https://gcc.gnu.org/viewcvs/gcc?view=revision&revision=259758
+
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=commit;h=3f0a5f17d7fe1f3d0911ad67a5993be59983fb00
