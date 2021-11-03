@@ -1,0 +1,102 @@
+diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
+index bccb0afcf4f..97e1d2830c1 100644
+--- a/bfd/elf32-microblaze.c
++++ b/bfd/elf32-microblaze.c
+@@ -876,6 +876,59 @@ microblaze_elf_output_dynamic_relocation (bfd *output_bfd,
+ 	      (sreloc->contents + reloc_index * sizeof (Elf32_External_Rela)));
+ }
+ 
++#define BRLID_BRALID_OPCODE_MASK    0xFC1F0000
++#define BRLID_OPCODE                0xB8140000
++#define BRALID_OPCODE               0xB81C0000
++#define ADDK_OPCODE                 0x10000000
++#define RD_MASK                     0x03E00000
++#define RA_MASK                     0x001F0000
++#define RB_MASK                     0x0000F800
++#define NOP                         0x80000000
++#define R0                          0x00
++#define R20                         0x14
++
++/*
++This code is to replace relative branch instruction with absolute
++branch instruction in case of absolute address coming from external elf
++*/
++
++static void
++microblaze_bfd_write_branch_absolute_value_64 (bfd *abfd, bfd_byte *bfd_addr)
++{
++    unsigned long instr_lo;
++
++    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
++    if ((instr_lo & BRLID_BRALID_OPCODE_MASK) == BRLID_OPCODE)
++      {
++	    instr_lo &= ~BRLID_BRALID_OPCODE_MASK;
++	    instr_lo |= BRALID_OPCODE;
++      }
++
++    bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
++}
++
++/*
++This code is to revert base register of instruction
++back to R0 instead of R20 in case of absolute address coming from external elf
++and -mpic-data-text-rel option was invoked in compilation
++*/
++
++static void
++microblaze_bfd_revert_base_reg_value_64 (bfd *abfd, bfd_byte *bfd_addr)
++{
++    unsigned long instr_lo;
++    unsigned long base_reg;
++
++    instr_lo = bfd_get_32 (abfd, bfd_addr + INST_WORD_SIZE);
++    base_reg = ((instr_lo & RA_MASK) >> 16);
++    if (base_reg == R20)
++      {
++	    instr_lo &= ~RA_MASK;
++	    instr_lo |= R0;
++	    bfd_put_32 (abfd, instr_lo, bfd_addr + INST_WORD_SIZE);
++      }
++}
++
+ /* This code is taken from elf32-m32r.c
+    There is some attempt to make this function usable for many architectures,
+    both USE_REL and USE_RELA ['twould be nice if such a critter existed],
+@@ -1050,6 +1103,25 @@ microblaze_elf_relocate_section (bfd *output_bfd,
+ 				       h, sec, relocation,
+ 				       unresolved_reloc, warned, ignored);
+ 	      sym_name = h->root.root.string;
++	      if (h->root.u.def.section->sec_info_type == SEC_INFO_TYPE_JUST_SYMS
++	    		  || bfd_is_abs_section(h->root.u.def.section))
++	      {
++	    	  //symbol from external file
++	    	  if ((int)r_type == R_MICROBLAZE_64_PCREL)
++	    	  {
++	    		  //Fix relative branches to be absolute
++	    		  r_type = R_MICROBLAZE_64;
++	    		  microblaze_bfd_write_branch_absolute_value_64 (
++	    				  input_bfd, contents + offset);
++	    	  }
++	    	  else if ((int) r_type == R_MICROBLAZE_TEXTREL_64)
++	    	  {
++	    		  // Fix base register to be r0 instead of r20
++	    		  r_type = R_MICROBLAZE_64;
++	    		  microblaze_bfd_revert_base_reg_value_64 (
++	    				  input_bfd, contents + offset);
++	    	  }
++	      }
+ 	    }
+ 
+ 	  /* Sanity check the address.  */
+@@ -1831,6 +1903,11 @@ microblaze_elf_relax_section (bfd *abfd,
+ 	       regular reloc processing.  */
+ 	    continue;
+ 
++	  if (h->root.u.def.section->sec_info_type == SEC_INFO_TYPE_JUST_SYMS
++			  || bfd_is_abs_section(h->root.u.def.section))
++		  /* Just ignore symbol from external file.  */
++		  continue;
++
+ 	  symval = (h->root.u.def.value
+ 		    + h->root.u.def.section->output_section->vma
+ 		    + h->root.u.def.section->output_offset);
